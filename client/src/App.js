@@ -103,13 +103,18 @@ const onDragEnd = (result, slots, tagsColumn, setSlots, setTagsColumn) => {
       const [removed] = sourceItems.splice(source.index, 1)
       destItems.splice(destination.index, 0, removed)
       // keep the remaining slot items but only target the destination
+      const destitems_copy = [...destItems]
+      const tag = destitems_copy[0].name
+      console.log("destitems_copy", destitems_copy[0].name)
       setSlots({
         ...slots,
         [destination.droppableId]: {
           ...destColumn,
-          tags: destItems,
+          // tags: destitems_copy,
+          tags: [{ id: uuidv4(), name: tag }],
         },
       })
+      setTagsColumn(tagsColumn)
     } else {
       sourceColumn = slots[source.droppableId]
       destColumn = slots[destination.droppableId]
