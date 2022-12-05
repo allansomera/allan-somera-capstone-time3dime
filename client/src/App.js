@@ -4,11 +4,7 @@ import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd"
 import { v4 as uuidv4 } from "uuid"
 const itemsFromBackend = [
   { id: uuidv4(), content: "First task" },
-
-  {
-    id: uuidv4(),
-    content: "Second task",
-  },
+  { id: uuidv4(), content: "Second task" },
 ]
 
 const columnsFromBackend = {
@@ -23,189 +19,319 @@ const columnsFromBackend = {
 }
 
 const tags = [
-  {
-    id: uuidv4(),
-    name: "sleep",
-  },
-  {
-    id: uuidv4(),
-    name: "work",
-  },
-  {
-    id: uuidv4(),
-    name: "gym",
-  },
-  {
-    id: uuidv4(),
-    name: "eat",
-  },
-  {
-    id: uuidv4(),
-    name: "free",
-  },
+  { id: uuidv4(), name: "sleep" },
+  { id: uuidv4(), name: "work" },
+  { id: uuidv4(), name: "gym" },
+  { id: uuidv4(), name: "eat" },
+  { id: uuidv4(), name: "free" },
 ]
 
 const timeSlots = {
-  [uuidv4]: {
-    slot: 0,
+  [uuidv4()]: {
+    slot: "1",
+    tags: [{ id: uuidv4(), name: "sleep" }],
+  },
+  [uuidv4()]: {
+    slot: "2",
     tags: [],
   },
-  [uuidv4]: {
-    slot: 1,
+  [uuidv4()]: {
+    slot: "3",
     tags: [],
   },
-  [uuidv4]: {
-    slot: 2,
+  [uuidv4()]: {
+    slot: "4",
     tags: [],
   },
-  [uuidv4]: {
-    slot: 3,
+  [uuidv4()]: {
+    slot: "5",
     tags: [],
   },
-  [uuidv4]: {
-    slot: 4,
+  [uuidv4()]: {
+    slot: "6",
     tags: [],
   },
-  [uuidv4]: {
-    slot: 5,
+  [uuidv4()]: {
+    slot: "7",
     tags: [],
   },
-  [uuidv4]: {
-    slot: 6,
+  [uuidv4()]: {
+    slot: "8",
     tags: [],
   },
-  [uuidv4]: {
-    slot: 7,
+  [uuidv4()]: {
+    slot: "9",
     tags: [],
   },
-  [uuidv4]: {
-    slot: 8,
+  [uuidv4()]: {
+    slot: "10",
     tags: [],
   },
-  [uuidv4]: {
-    slot: 9,
+  [uuidv4()]: {
+    slot: "11",
     tags: [],
   },
-  [uuidv4]: {
-    slot: 10,
-    tags: [],
-  },
-  [uuidv4]: {
-    slot: 11,
-    tags: [],
-  },
-  [uuidv4]: {
-    slot: 12,
+  [uuidv4()]: {
+    slot: "12",
     tags: [],
   },
 }
 
-const onDragEnd = (result, columns, setColumns) => {
+const tagSlot = {
+  [uuidv4()]: {
+    slot: "tags",
+    tags: tags,
+  },
+}
+
+const onDragEnd = (result, slots, tagsColumn, setSlots, setTagsColumn) => {
   if (!result.destination) return
+  console.log("slots", slots)
   const { source, destination } = result
+  console.log("result", result)
+  console.log("source", source)
+  console.log("destination", destination)
+  let sourceColumn = {}
+  let destColumn = {}
   if (source.droppableId !== destination.droppableId) {
-    const sourceColumn = columns[source.droppableId]
-    const destColumn = columns[destination.droppableId]
-    const sourceItems = [...sourceColumn.items]
-    const destItems = [...destColumn.items]
-    const [removed] = sourceItems.splice(source.index, 1)
-    destItems.splice(destination.index, 0, removed)
-    setColumns({
-      ...columns,
-      [source.droppableId]: {
-        ...sourceColumn,
-        items: sourceItems,
-      },
-      [destination.droppableId]: {
-        ...destColumn,
-        items: destItems,
-      },
-    })
+    // console.log("has property", tagsColumn.hasOwnProperty(source.droppableId))
+    if (tagsColumn.hasOwnProperty(source.droppableId)) {
+      sourceColumn = tagsColumn[source.droppableId]
+      destColumn = slots[destination.droppableId]
+      const sourceItems = [...sourceColumn.tags]
+      const destItems = [...destColumn.tags]
+      const [removed] = sourceItems.splice(source.index, 1)
+      destItems.splice(destination.index, 0, removed)
+      // keep the remaining slot items but only target the destination
+      setSlots({
+        ...slots,
+        [destination.droppableId]: {
+          ...destColumn,
+          tags: destItems,
+        },
+      })
+    } else {
+      sourceColumn = slots[source.droppableId]
+      destColumn = slots[destination.droppableId]
+      const sourceItems = [...sourceColumn.tags]
+      const destItems = [...destColumn.tags]
+      const [removed] = sourceItems.splice(source.index, 1)
+      destItems.splice(destination.index, 0, removed)
+      setSlots({
+        ...slots,
+        [source.droppableId]: {
+          ...sourceColumn,
+          tags: sourceItems,
+        },
+        [destination.droppableId]: {
+          ...destColumn,
+          tags: destItems,
+        },
+      })
+    }
+    // console.log("sourceColumn", sourceColumn)
+    // console.log("destColumn", destColumn)
+    // const sourceItems = [...sourceColumn.tags]
+    // const destItems = [...destColumn.tags]
+    // const [removed] = sourceItems.splice(source.index, 1)
+    // destItems.splice(destination.index, 0, removed)
+    // setSlots({
+    //   ...slots,
+    //   [source.droppableId]: {
+    //     ...sourceColumn,
+    //     tags: sourceItems,
+    //   },
+    //   [destination.droppableId]: {
+    //     ...destColumn,
+    //     tags: destItems,
+    //   },
+    // })
   } else {
-    const column = columns[source.droppableId]
-    const copiedItems = [...column.items]
+    console.log("same droppableId")
+    const slot = slots[source.droppableId]
+    const copiedItems = [...slot.tags]
     const [removed] = copiedItems.splice(source.index, 1)
     copiedItems.splice(destination.index, 0, removed)
-    setColumns({
-      ...columns,
+    setSlots({
+      ...slots,
       [source.droppableId]: {
-        ...column,
-        items: copiedItems,
+        ...slot,
+        tags: copiedItems,
       },
     })
   }
 }
+
 function App() {
-  const [columns, setColumns] = useState(columnsFromBackend)
-  console.log(Object.entries(columns))
-  // console.log(columns)
+  const [slots, setSlots] = useState(timeSlots)
+  const [tagsColumn, setTagsColumn] = useState(tagSlot)
+  // console.log(slots)
+  // console.log(Object.entries(slots))
+  // onDragEnd={(result) => onDragEnd(result, slots, setSlots)}
   return (
     <>
-      <div className="app">
-        <DragDropContext
-          onDragEnd={(result) => onDragEnd(result, columns, setColumns)}
-        >
-          {Object.entries(columns).map(([id, column]) => {
-            console.log(id, column)
-            return (
-              <Droppable key={id} droppableId={id}>
-                {(provided, snapshot) => {
-                  return (
-                    <div
-                      {...provided.droppableProps}
-                      ref={provided.innerRef}
-                      style={{
-                        background: snapshot.isDraggingOver
-                          ? "lightblue"
-                          : "lightgrey",
-                        padding: 4,
-                        width: 250,
-                        minHeight: 500,
-                      }}
-                    >
-                      {column.items.map((item, index) => {
-                        return (
-                          <Draggable
-                            key={item.id}
-                            draggableId={item.id}
-                            index={index}
-                          >
-                            {(provided, snapshot) => {
-                              return (
-                                <div
-                                  ref={provided.innerRef}
-                                  {...provided.draggableProps}
-                                  {...provided.dragHandleProps}
-                                  style={{
-                                    userSelect: "none",
-                                    padding: 16,
-                                    margin: "0 0 8px 0",
-                                    minHeight: "30px",
-                                    backgroundColor: snapshot.isDragging
-                                      ? "#000000"
-                                      : "#456c86",
-                                    color: "white",
-                                    ...provided.draggableProps.style,
-                                  }}
-                                >
-                                  {item.content}
-                                </div>
-                              )
-                            }}
-                          </Draggable>
-                        )
-                      })}
-                      {provided.placeholder}
-                    </div>
-                  )
-                }}
-              </Droppable>
-            )
-          })}
-        </DragDropContext>
-      </div>
+      <DragDropContext
+        onDragEnd={(result) =>
+          onDragEnd(result, slots, tagsColumn, setSlots, setTagsColumn)
+        }
+      >
+        <div className="app">
+          <div className="column1">
+            {Object.entries(slots).map(([id, slot]) => {
+              return (
+                <div className="timeslot" key={id}>
+                  <h2>{slot.slot}</h2>
+                  <Droppable key={id} droppableId={id}>
+                    {(provided, snapshot) => {
+                      return (
+                        <div
+                          {...provided.droppableProps}
+                          ref={provided.innerRef}
+                          style={{
+                            background: snapshot.isDraggingOver
+                              ? "lightblue"
+                              : "lightgrey",
+                            padding: 4,
+                            width: 250,
+                            minHeight: 100,
+                          }}
+                        >
+                          {slot.tags.map((item, index) => {
+                            return (
+                              <Draggable
+                                key={item.id}
+                                draggableId={item.id}
+                                index={index}
+                              >
+                                {(provided, snapshot) => {
+                                  return (
+                                    <div
+                                      ref={provided.innerRef}
+                                      {...provided.draggableProps}
+                                      {...provided.dragHandleProps}
+                                      style={{
+                                        userSelect: "none",
+                                        padding: 16,
+                                        margin: "0 0 8px 0",
+                                        minHeight: "30px",
+                                        backgroundColor: snapshot.isDragging
+                                          ? "#000000"
+                                          : "#456c86",
+                                        color: "white",
+                                        ...provided.draggableProps.style,
+                                      }}
+                                    >
+                                      {item.name}
+                                    </div>
+                                  )
+                                }}
+                              </Draggable>
+                            )
+                          })}
+                          {provided.placeholder}
+                        </div>
+                      )
+                    }}
+                  </Droppable>
+                </div>
+              )
+            })}
+          </div>
+          <div className="column2">
+            {Object.entries(tagSlot).map(([id, slot]) => {
+              return (
+                <div className="timeslot" key={id}>
+                  <h2>{slot.slot}</h2>
+                  <Droppable key={id} droppableId={id}>
+                    {(provided, snapshot) => {
+                      return (
+                        <div
+                          {...provided.droppableProps}
+                          ref={provided.innerRef}
+                          style={{
+                            background: snapshot.isDraggingOver
+                              ? "lightblue"
+                              : "lightgrey",
+                            padding: 4,
+                            width: 250,
+                            minHeight: 100,
+                          }}
+                        >
+                          {slot.tags.map((item, index) => {
+                            return (
+                              <Draggable
+                                key={item.id}
+                                draggableId={item.id}
+                                index={index}
+                              >
+                                {(provided, snapshot) => {
+                                  return (
+                                    <div
+                                      ref={provided.innerRef}
+                                      {...provided.draggableProps}
+                                      {...provided.dragHandleProps}
+                                      style={{
+                                        userSelect: "none",
+                                        padding: 16,
+                                        margin: "0 0 8px 0",
+                                        minHeight: "30px",
+                                        backgroundColor: snapshot.isDragging
+                                          ? "#000000"
+                                          : "#456c86",
+                                        color: "white",
+                                        ...provided.draggableProps.style,
+                                      }}
+                                    >
+                                      {item.name}
+                                    </div>
+                                  )
+                                }}
+                              </Draggable>
+                            )
+                          })}
+                          {provided.placeholder}
+                        </div>
+                      )
+                    }}
+                  </Droppable>
+                </div>
+              )
+            })}
+          </div>
+        </div>
+      </DragDropContext>
     </>
   )
 }
 
+// {slot.items.map((item, index) => {
+//   return (
+//     <Draggable
+//       key={item.id}
+//       draggableId={item.id}
+//       index={index}
+//     >
+//       {(provided, snapshot) => {
+//         return (
+//           <div
+//             ref={provided.innerRef}
+//             {...provided.draggableProps}
+//             {...provided.dragHandleProps}
+//             style={{
+//               userSelect: "none",
+//               padding: 16,
+//               margin: "0 0 8px 0",
+//               minHeight: "30px",
+//               backgroundColor: snapshot.isDragging
+//                 ? "#000000"
+//                 : "#456c86",
+//               color: "white",
+//               ...provided.draggableProps.style,
+//             }}
+//           ></div>
+//         )
+//       }}
+//     </Draggable>
+//   )
+// })}
 export default App
