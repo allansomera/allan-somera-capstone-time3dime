@@ -1,5 +1,5 @@
 import "./App.scss"
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd"
 import { v4 as uuidv4 } from "uuid"
 const itemsFromBackend = [
@@ -110,11 +110,11 @@ const onDragEnd = (result, slots, tagsColumn, setSlots, setTagsColumn) => {
         ...slots,
         [destination.droppableId]: {
           ...destColumn,
-          // tags: destitems_copy,
           tags: [{ id: uuidv4(), name: tag }],
         },
       })
       setTagsColumn(tagsColumn)
+      // console.log("current state of slots", slots)
     } else {
       sourceColumn = slots[source.droppableId]
       destColumn = slots[destination.droppableId]
@@ -134,23 +134,6 @@ const onDragEnd = (result, slots, tagsColumn, setSlots, setTagsColumn) => {
         },
       })
     }
-    // console.log("sourceColumn", sourceColumn)
-    // console.log("destColumn", destColumn)
-    // const sourceItems = [...sourceColumn.tags]
-    // const destItems = [...destColumn.tags]
-    // const [removed] = sourceItems.splice(source.index, 1)
-    // destItems.splice(destination.index, 0, removed)
-    // setSlots({
-    //   ...slots,
-    //   [source.droppableId]: {
-    //     ...sourceColumn,
-    //     tags: sourceItems,
-    //   },
-    //   [destination.droppableId]: {
-    //     ...destColumn,
-    //     tags: destItems,
-    //   },
-    // })
   } else {
     console.log("same droppableId")
     const slot = slots[source.droppableId]
@@ -173,6 +156,9 @@ function App() {
   // console.log(slots)
   // console.log(Object.entries(slots))
   // onDragEnd={(result) => onDragEnd(result, slots, setSlots)}
+  useEffect(() => {
+    console.log("current state of slots", slots)
+  }, [slots])
   return (
     <>
       <DragDropContext
@@ -197,8 +183,8 @@ function App() {
                               ? "lightblue"
                               : "lightgrey",
                             padding: 4,
-                            width: 250,
-                            minHeight: 100,
+                            width: 200,
+                            minHeight: 50,
                           }}
                         >
                           {slot.tags.map((item, index) => {
@@ -218,7 +204,7 @@ function App() {
                                         userSelect: "none",
                                         padding: 16,
                                         margin: "0 0 8px 0",
-                                        minHeight: "30px",
+                                        minHeight: "10px",
                                         backgroundColor: snapshot.isDragging
                                           ? "#000000"
                                           : "#456c86",
@@ -258,8 +244,8 @@ function App() {
                               ? "lightblue"
                               : "lightgrey",
                             padding: 4,
-                            width: 250,
-                            minHeight: 100,
+                            width: 200,
+                            minHeight: 50,
                           }}
                         >
                           {slot.tags.map((item, index) => {
