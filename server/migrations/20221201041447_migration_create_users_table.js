@@ -3,13 +3,15 @@
  * @returns { Promise<void> }
  */
 exports.up = function (knex) {
-  return knex.schema.createTable("users", (table) => {
-    table.uuid("id").primary()
-    table.string("first_name").notNullable()
-    table.string("last_name").notNullable()
-    table.string("email").notNullable()
-    // table.timestamps(true, true)
-  })
+  return knex.schema
+    .dropTableIfExists("users")
+    .createTable("users", (table) => {
+      table.uuid("id").primary()
+      table.string("first_name").notNullable()
+      table.string("last_name").notNullable()
+      table.string("email").notNullable()
+      // table.timestamps(true, true)
+    })
 }
 /**
  * @param { import("knex").Knex } knex
