@@ -6,7 +6,7 @@ exports.up = function (knex) {
   return knex.schema
     .dropTableIfExists("timeblock")
     .createTable("timeblock", (table) => {
-      table.uuid("timeblock_id").primary()
+      table.tinyint("timeblock_id").primary()
       table.string("timeslot").notNullable()
       table.timestamps(true, true)
     })

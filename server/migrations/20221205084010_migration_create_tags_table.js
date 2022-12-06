@@ -4,7 +4,7 @@
  */
 exports.up = function (knex) {
   return knex.schema.dropTableIfExists("tags").createTable("tags", (table) => {
-    table.uuid("tag_id").primary()
+    table.tinyint("tag_id").primary()
     table.string("type").notNullable()
     table.timestamps(true, true)
   })

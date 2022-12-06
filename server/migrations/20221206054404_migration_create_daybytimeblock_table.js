@@ -13,12 +13,12 @@ exports.up = function (knex) {
         .onUpdate("CASCADE")
         .onDelete("CASCADE")
       table
-        .uuid("fk_timeblock_id")
+        .tinyint("fk_timeblock_id")
         .references("timeblock.timeblock_id")
         .onUpdate("CASCADE")
         .onDelete("CASCADE")
       table
-        .uuid("fk_tag_id")
+        .tinyint("fk_tag_id")
         .references("tags.tag_id")
         .onUpdate("CASCADE")
         .onDelete("CASCADE")
@@ -31,5 +31,5 @@ exports.up = function (knex) {
  * @returns { Promise<void> }
  */
 exports.down = function (knex) {
-  return knex.schemea.dropTable("dayByTimeblock")
+  return knex.schema.dropTable("dayByTimeblock")
 }
