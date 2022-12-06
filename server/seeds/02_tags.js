@@ -3,16 +3,34 @@ exports.seed = async (knex) => {
   await knex("tags").del()
   await knex("tags").insert([
     {
-      id: uuid(),
+      tag_id: "42ffb073-8993-41eb-b290-b6cb5411248f",
+      tag_id: 1,
       type: "gym",
     },
     {
-      id: uuid(),
+      tag_id: "33ab623f-e415-4c31-a89b-815bfbade7a5",
+      tag_id: 2,
       type: "free",
     },
     {
-      id: uuid(),
+      tag_id: "68857af6-c43e-47d7-9775-a32ac86ce3e0",
+      tag_id: 3,
       type: "sleep",
+    },
+    {
+      tag_id: "8df2f6f1-2f14-4740-911d-87bdbff79026",
+      tag_id: 4,
+      type: "school",
+    },
+    {
+      tag_id: "63d69f63-3948-4be0-ac42-2efdd9a6837d",
+      tag_id: 5,
+      type: "eat",
+    },
+    {
+      tag_id: "0e0b1365-2e97-4c71-93a7-11ef71ac3f62",
+      tag_id: 6,
+      type: "code",
     },
   ])
 }

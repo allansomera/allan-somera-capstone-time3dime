@@ -3,9 +3,10 @@
  * @returns { Promise<void> }
  */
 exports.up = function (knex) {
-  return knex.schema.createTable("tags", (table) => {
-    table.uuid("id").primary()
+  return knex.schema.dropTableIfExists("tags").createTable("tags", (table) => {
+    table.tinyint("tag_id").primary()
     table.string("type").notNullable()
+    table.timestamps(true, true)
   })
 }
 
