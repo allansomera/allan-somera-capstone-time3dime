@@ -3,9 +3,10 @@
  * @returns { Promise<void> }
  */
 exports.up = function (knex) {
-  return knex.schema.createTable("tag", (table) => {
-    table.uuid("tag_id").primary()
-    table.string("type").notNullable()
+  return knex.schema.createTable("timeblock", (table) => {
+    table.uuid("timeblock_id").primary()
+    table.string("timeslot").notNullable()
+    table.timestamps(true, true)
   })
 }
 
@@ -14,5 +15,5 @@ exports.up = function (knex) {
  * @returns { Promise<void> }
  */
 exports.down = function (knex) {
-  return knex.schema.dropTable("tag")
+  return knex.schema.dropTable("timeblock")
 }
