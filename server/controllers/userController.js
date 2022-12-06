@@ -9,3 +9,7 @@ exports.index = (_req, res) => {
     })
     .catch((err) => res.status(400).send(`Error retrieving user ${err}`))
 }
+
+exports.index = () => {
+  return ""
+}
