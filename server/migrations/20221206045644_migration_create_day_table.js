@@ -3,7 +3,7 @@
  * @returns { Promise<void> }
  */
 exports.up = function (knex) {
-  return knex.schema.createTable("day", (table) => {
+  return knex.schema.dropTableIfExists("day").createTable("day", (table) => {
     table.uuid("day_id").primary()
     table
       .uuid("fk_user_id")

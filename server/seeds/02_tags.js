@@ -21,10 +21,10 @@ exports.seed = async (knex) => {
     {
       tag_id: "63d69f63-3948-4be0-ac42-2efdd9a6837d",
       type: "eat",
-    }{
+    },
+    {
       tag_id: "0e0b1365-2e97-4c71-93a7-11ef71ac3f62",
       type: "code",
     },
-,
   ])
 }
