@@ -27,9 +27,20 @@ exports.singleUser = (req, res) => {
 }
 
 exports.userDay = (req, res) => {
-  knex("users")
-    .join("day", "day.fk_user_id", "users.id")
-    .where({ fk_user_id: req.params.id })
+  knex
+    .select(
+      "u.id as user_id",
+      "d.day_id as day_id",
+      "dbt.dayByTimeblock_id as day_timeblock_id",
+      "dbt.fk_timeblock_id",
+      "dbt.fk_tag_id",
+      "t.type"
+    )
+    .from("users as u")
+    .join("day as d", "u.id", "=", "d.fk_user_id")
+    .join("dayByTimeblock as dbt", "d.day_id", "=", "dbt.fk_day_id")
+    .join("tags as t", "t.tag_id", "=", "dbt.fk_tag_id")
+    .orderBy("dbt.fk_timeblock_id", "asc")
     .then((data) => {
       res.status(200).json(data)
     })

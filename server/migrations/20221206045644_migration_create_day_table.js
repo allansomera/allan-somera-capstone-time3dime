@@ -4,7 +4,8 @@
  */
 exports.up = function (knex) {
   return knex.schema.dropTableIfExists("day").createTable("day", (table) => {
-    table.uuid("day_id").primary()
+    // table.primary(["date", "month", "year"], "day_id")
+    table.increments("day_id").primary()
     table
       .uuid("fk_user_id")
       .references("users.id")
