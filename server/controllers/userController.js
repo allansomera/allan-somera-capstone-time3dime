@@ -34,6 +34,7 @@ exports.userDay = (req, res) => {
       "dbt.dayByTimeblock_id as day_timeblock_id",
       "dbt.fk_timeblock_id",
       "dbt.fk_tag_id",
+      "dbt.draggable_id",
       "t.type"
     )
     .from("users as u")
