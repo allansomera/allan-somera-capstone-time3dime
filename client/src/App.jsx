@@ -2,6 +2,10 @@ import "./App.scss"
 import React, { useState, useEffect } from "react"
 import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd"
 import { v4 as uuidv4 } from "uuid"
+import axios from "axios"
+
+import TimeblockContainer from "./components/timeblock-container/TimeblockContainer"
+
 const itemsFromBackend = [
   { id: uuidv4(), content: "First task" },
   { id: uuidv4(), content: "Second task" },
@@ -84,6 +88,9 @@ const tagSlot = {
   },
 }
 
+const URL = "http://localhost:8080"
+const u_id = "2922c286-16cd-4d43-ab98-c79f698aeab0"
+
 const onDragEnd = (result, slots, tagsColumn, setSlots, setTagsColumn) => {
   if (!result.destination) return
   console.log("slots", slots)
@@ -153,12 +160,24 @@ const onDragEnd = (result, slots, tagsColumn, setSlots, setTagsColumn) => {
 function App() {
   const [slots, setSlots] = useState(timeSlots)
   const [tagsColumn, setTagsColumn] = useState(tagSlot)
+  const [timeblocks, setTimeblocks] = useState([])
+
   // console.log(slots)
   // console.log(Object.entries(slots))
   // onDragEnd={(result) => onDragEnd(result, slots, setSlots)}
   useEffect(() => {
     console.log("current state of slots", slots)
-  }, [slots])
+    console.log("current state of timeblock", timeblocks)
+  }, [slots, timeblocks])
+
+  useEffect(() => {
+    const getTimeblocks = async () => {
+      const { data } = await axios.get(`${URL}/users/${u_id}/day`)
+      setTimeblocks(data)
+    }
+    getTimeblocks()
+  }, [])
+
   return (
     <>
       <DragDropContext
@@ -168,64 +187,8 @@ function App() {
       >
         <div className="app">
           <div className="column1">
-            {Object.entries(slots).map(([id, slot]) => {
-              return (
-                <div className="timeslot" key={id}>
-                  <h2>{slot.slot}</h2>
-                  <Droppable key={id} droppableId={id}>
-                    {(provided, snapshot) => {
-                      return (
-                        <div
-                          {...provided.droppableProps}
-                          ref={provided.innerRef}
-                          style={{
-                            background: snapshot.isDraggingOver
-                              ? "lightblue"
-                              : "lightgrey",
-                            padding: 4,
-                            width: 200,
-                            minHeight: 50,
-                          }}
-                        >
-                          {slot.tags.map((item, index) => {
-                            return (
-                              <Draggable
-                                key={item.id}
-                                draggableId={item.id}
-                                index={index}
-                              >
-                                {(provided, snapshot) => {
-                                  return (
-                                    <div
-                                      ref={provided.innerRef}
-                                      {...provided.draggableProps}
-                                      {...provided.dragHandleProps}
-                                      style={{
-                                        userSelect: "none",
-                                        padding: 16,
-                                        margin: "0 0 8px 0",
-                                        minHeight: "10px",
-                                        backgroundColor: snapshot.isDragging
-                                          ? "#000000"
-                                          : "#456c86",
-                                        color: "white",
-                                        ...provided.draggableProps.style,
-                                      }}
-                                    >
-                                      {item.name}
-                                    </div>
-                                  )
-                                }}
-                              </Draggable>
-                            )
-                          })}
-                          {provided.placeholder}
-                        </div>
-                      )
-                    }}
-                  </Droppable>
-                </div>
-              )
+            {timeblocks.map((droppable_item) => {
+              return <TimeblockContainer droppable_item={droppable_item} />
             })}
           </div>
           <div className="column2">
@@ -295,34 +258,4 @@ function App() {
   )
 }
 
-// {slot.items.map((item, index) => {
-//   return (
-//     <Draggable
-//       key={item.id}
-//       draggableId={item.id}
-//       index={index}
-//     >
-//       {(provided, snapshot) => {
-//         return (
-//           <div
-//             ref={provided.innerRef}
-//             {...provided.draggableProps}
-//             {...provided.dragHandleProps}
-//             style={{
-//               userSelect: "none",
-//               padding: 16,
-//               margin: "0 0 8px 0",
-//               minHeight: "30px",
-//               backgroundColor: snapshot.isDragging
-//                 ? "#000000"
-//                 : "#456c86",
-//               color: "white",
-//               ...provided.draggableProps.style,
-//             }}
-//           ></div>
-//         )
-//       }}
-//     </Draggable>
-//   )
-// })}
 export default App

@@ -7,6 +7,7 @@ exports.up = function (knex) {
     .dropTableIfExists("dayByTimeblock")
     .createTable("dayByTimeblock", (table) => {
       table.uuid("dayByTimeblock_id").primary()
+      table.uuid("draggable_id")
       table
         .integer("fk_day_id")
         .unsigned()
