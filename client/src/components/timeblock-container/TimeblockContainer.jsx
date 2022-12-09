@@ -1,5 +1,6 @@
 import "./TimeblockContainer.scss"
 import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd"
+import TimeblockItem from "../timeblockitem/TimeblockItem"
 
 const TimeblockContainer = ({ droppable_item }) => {
   const id = droppable_item.day_timeblock_id
@@ -18,6 +19,7 @@ const TimeblockContainer = ({ droppable_item }) => {
                 minHeight: 50,
               }}
             >
+              <TimeblockItem item={droppable_item} />
               {provided.placeholder}
             </div>
           )
