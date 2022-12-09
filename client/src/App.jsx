@@ -91,9 +91,15 @@ const tagSlot = {
 const URL = "http://localhost:8080"
 const u_id = "2922c286-16cd-4d43-ab98-c79f698aeab0"
 
-const onDragEnd = (result, slots, tagsColumn, setSlots, setTagsColumn) => {
+const getObject = (timeblocks, dest) => {
+  return timeblocks.filter((o) => {
+    return o.day_timeblock_id === dest
+  })
+}
+
+const onDragEnd = (result, timeblocks, tagsColumn, setTagsColumn) => {
   if (!result.destination) return
-  console.log("slots", slots)
+  // console.log("slots", slots)
   const { source, destination } = result
   console.log("result", result)
   console.log("source", source)
@@ -104,9 +110,14 @@ const onDragEnd = (result, slots, tagsColumn, setSlots, setTagsColumn) => {
     // console.log("has property", tagsColumn.hasOwnProperty(source.droppableId))
     if (tagsColumn.hasOwnProperty(source.droppableId)) {
       sourceColumn = tagsColumn[source.droppableId]
-      destColumn = slots[destination.droppableId]
+      console.log("sourceColumn", sourceColumn)
+      destColumn = getObject(timeblocks, destination.droppableId)[0]
+      console.log("destColumn", destColumn)
       const sourceItems = [...sourceColumn.tags]
-      const destItems = [...destColumn.tags]
+      console.log("sourceitems", sourceItems)
+      // const destItems = [...destColumn.tags]
+      // destItems = getObject(destination.droppableId)
+      // console.log("sourceitems", destItems)
       const [removed] = sourceItems.splice(source.index, 1)
       destItems.splice(destination.index, 0, removed)
       // keep the remaining slot items but only target the destination
@@ -165,10 +176,10 @@ function App() {
   // console.log(slots)
   // console.log(Object.entries(slots))
   // onDragEnd={(result) => onDragEnd(result, slots, setSlots)}
-  useEffect(() => {
-    console.log("current state of slots", slots)
-    console.log("current state of timeblock", timeblocks)
-  }, [slots, timeblocks])
+  // useEffect(() => {
+  //   // console.log("current state of slots", slots)
+  //   console.log("current state of timeblock", timeblocks)
+  // }, [slots, timeblocks])
 
   useEffect(() => {
     const getTimeblocks = async () => {
@@ -182,7 +193,7 @@ function App() {
     <>
       <DragDropContext
         onDragEnd={(result) =>
-          onDragEnd(result, slots, tagsColumn, setSlots, setTagsColumn)
+          onDragEnd(result, timeblocks, tagsColumn, setTagsColumn)
         }
       >
         <div className="app">
