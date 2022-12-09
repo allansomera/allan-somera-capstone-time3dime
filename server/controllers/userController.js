@@ -32,7 +32,7 @@ exports.userDay = (req, res) => {
   knex
     .select(
       "u.id as user_id",
-      "ud.userday_id as userday_id",
+      // "ud.userday_id as userday_id",
       "d.day_id as day_id",
       "dbt.dayByTimeblock_id as day_timeblock_id",
       "dbt.fk_timeblock_id",
@@ -41,10 +41,10 @@ exports.userDay = (req, res) => {
       "t.type"
     )
     .from("users as u")
-    .join("userday as ud", "u.id", "=", "ud.fk_user_id")
-    .join("day as d", "ud.fk_day_id", "=", "d.day_id")
-    .join("dayByTimeblock as dbt", "d.day_id", "=", "dbt.fk_day_id")
-    .join("tags as t", "dbt.fk_tag_id", "=", "t.tag_id")
+    // .leftJoin("userday as ud", "u.id", "=", "ud.fk_user_id")
+    .leftJoin("day as d", "u.id", "=", "d.fk_user_id")
+    .leftJoin("dayByTimeblock as dbt", "d.day_id", "=", "dbt.fk_day_id")
+    .leftJoin("tags as t", "dbt.fk_tag_id", "=", "t.tag_id")
     .where("u.id", id)
     .modify((q_builder) => {
       if (day_id) {

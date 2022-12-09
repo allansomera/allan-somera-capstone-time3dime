@@ -6,6 +6,11 @@ exports.up = function (knex) {
   return knex.schema.dropTableIfExists("day").createTable("day", (table) => {
     // table.primary(["date", "month", "year"], "day_id")
     table.increments("day_id").primary()
+    table
+      .uuid("fk_user_id")
+      .references("users.id")
+      .onUpdate("CASCADE")
+      .onDelete("CASCADE")
     table.string("date").notNullable()
     table.string("month").notNullable()
     table.string("year").notNullable()

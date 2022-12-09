@@ -172,7 +172,7 @@ function App() {
 
   useEffect(() => {
     const getTimeblocks = async () => {
-      const { data } = await axios.get(`${URL}/users/${u_id}/day`)
+      const { data } = await axios.get(`${URL}/users/${u_id}/days/2`)
       setTimeblocks(data)
     }
     getTimeblocks()
