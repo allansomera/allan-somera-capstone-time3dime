@@ -108,9 +108,9 @@ const onDragEnd = (
   if (!result.destination) return
   // console.log("slots", slots)
   const { source, destination } = result
-  console.log("result", result)
-  console.log("source", source)
-  console.log("destination", destination)
+  // console.log("result", result)
+  // console.log("source", source)
+  // console.log("destination", destination)
   let sourceColumn = {}
   let destColumn = {}
   if (source.droppableId !== destination.droppableId) {
@@ -186,10 +186,10 @@ function App() {
   // console.log(slots)
   // console.log(Object.entries(slots))
   // onDragEnd={(result) => onDragEnd(result, slots, setSlots)}
-  useEffect(() => {
-    // console.log("current state of slots", slots)
-    console.log("current state of timeblock", timeblocks)
-  }, [slots, timeblocks])
+  // useEffect(() => {
+  //   // console.log("current state of slots", slots)
+  //   console.log("current state of timeblock", timeblocks)
+  // }, [slots, timeblocks])
 
   useEffect(() => {
     const getTimeblocks = async () => {
