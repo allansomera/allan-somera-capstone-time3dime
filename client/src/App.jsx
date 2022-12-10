@@ -91,69 +91,90 @@ const tagSlot = {
 const URL = "http://localhost:8080"
 const u_id = "2922c286-16cd-4d43-ab98-c79f698aeab0"
 
-const onDragEnd = (result, slots, tagsColumn, setSlots, setTagsColumn) => {
+const getObject = (timeblocks, dest) => {
+  return timeblocks.filter((o) => {
+    return o.day_timeblock_id === dest
+  })
+}
+
+const onDragEnd = (
+  result,
+  slots,
+  timeblocks,
+  tagsColumn,
+  setTimeblocks,
+  setTagsColumn
+) => {
   if (!result.destination) return
-  console.log("slots", slots)
+  // console.log("slots", slots)
   const { source, destination } = result
-  console.log("result", result)
-  console.log("source", source)
-  console.log("destination", destination)
+  // console.log("result", result)
+  // console.log("source", source)
+  // console.log("destination", destination)
   let sourceColumn = {}
   let destColumn = {}
   if (source.droppableId !== destination.droppableId) {
-    // console.log("has property", tagsColumn.hasOwnProperty(source.droppableId))
     if (tagsColumn.hasOwnProperty(source.droppableId)) {
+      // console.log("has property", tagsColumn.hasOwnProperty(source.droppableId))
       sourceColumn = tagsColumn[source.droppableId]
-      destColumn = slots[destination.droppableId]
+      destColumn = getObject(timeblocks, destination.droppableId)[0]
+      const destTarget_idx = timeblocks.findIndex(
+        (o) => o.day_timeblock_id === destination.droppableId
+      )
       const sourceItems = [...sourceColumn.tags]
-      const destItems = [...destColumn.tags]
       const [removed] = sourceItems.splice(source.index, 1)
-      destItems.splice(destination.index, 0, removed)
-      // keep the remaining slot items but only target the destination
-      const destitems_copy = [...destItems]
-      const tag = destitems_copy[0].name
-      console.log("destitems_copy", destitems_copy[0].name)
-      setSlots({
-        ...slots,
-        [destination.droppableId]: {
-          ...destColumn,
-          tags: [{ id: uuidv4(), name: tag }],
-        },
-      })
+      const destColumn_copy = {
+        ...destColumn,
+        type: removed.name,
+      }
+      const new_timeblocks = [...timeblocks]
+      new_timeblocks[destTarget_idx] = destColumn_copy
+      setTimeblocks(new_timeblocks)
       setTagsColumn(tagsColumn)
-      // console.log("current state of slots", slots)
     } else {
-      sourceColumn = slots[source.droppableId]
-      destColumn = slots[destination.droppableId]
-      const sourceItems = [...sourceColumn.tags]
-      const destItems = [...destColumn.tags]
-      const [removed] = sourceItems.splice(source.index, 1)
-      destItems.splice(destination.index, 0, removed)
-      setSlots({
-        ...slots,
-        [source.droppableId]: {
-          ...sourceColumn,
-          tags: sourceItems,
-        },
-        [destination.droppableId]: {
-          ...destColumn,
-          tags: destItems,
-        },
-      })
+      sourceColumn = getObject(timeblocks, source.droppableId)[0]
+      destColumn = getObject(timeblocks, destination.droppableId)[0]
+      // find source index
+      const sourceTarget_idx = timeblocks.findIndex(
+        (o) => o.day_timeblock_id === source.droppableId
+      )
+      // find destination index
+      const destTarget_idx = timeblocks.findIndex(
+        (o) => o.day_timeblock_id === destination.droppableId
+      )
+
+      // change source timeslot type to null
+      const sourceColumn_copy = {
+        ...sourceColumn,
+        type: null,
+      }
+
+      // change destination timeslot to a copu of the source
+      const destColumn_copy = {
+        ...destColumn,
+        type: sourceColumn.type,
+      }
+      const new_timeblocks = [...timeblocks]
+      new_timeblocks[sourceTarget_idx] = sourceColumn_copy
+      new_timeblocks[destTarget_idx] = destColumn_copy
+      setTimeblocks(new_timeblocks)
     }
   } else {
-    console.log("same droppableId")
-    const slot = slots[source.droppableId]
-    const copiedItems = [...slot.tags]
-    const [removed] = copiedItems.splice(source.index, 1)
-    copiedItems.splice(destination.index, 0, removed)
-    setSlots({
-      ...slots,
-      [source.droppableId]: {
-        ...slot,
-        tags: copiedItems,
-      },
-    })
+    // console.log("same droppableId")
+    // console.log("result", result)
+    // console.log("source", source)
+    // console.log("destination", destination)
+    // sourceColumn = getObject(timeblocks, source.droppableId)
+    // destColumn = getObject(timeblocks, destination.droppableId)
+    // const [removed] = copiedItems.splice(source.index, 1)
+    // copiedItems.splice(destination.index, 0, removed)
+    // setSlots({
+    //   ...slots,
+    //   [source.droppableId]: {
+    //     ...slot,
+    //     tags: copiedItems,
+    //   },
+    // })
   }
 }
 
@@ -165,14 +186,14 @@ function App() {
   // console.log(slots)
   // console.log(Object.entries(slots))
   // onDragEnd={(result) => onDragEnd(result, slots, setSlots)}
-  useEffect(() => {
-    console.log("current state of slots", slots)
-    console.log("current state of timeblock", timeblocks)
-  }, [slots, timeblocks])
+  // useEffect(() => {
+  //   // console.log("current state of slots", slots)
+  //   console.log("current state of timeblock", timeblocks)
+  // }, [slots, timeblocks])
 
   useEffect(() => {
     const getTimeblocks = async () => {
-      const { data } = await axios.get(`${URL}/users/${u_id}/day`)
+      const { data } = await axios.get(`${URL}/users/${u_id}/days/2`)
       setTimeblocks(data)
     }
     getTimeblocks()
@@ -182,7 +203,14 @@ function App() {
     <>
       <DragDropContext
         onDragEnd={(result) =>
-          onDragEnd(result, slots, tagsColumn, setSlots, setTagsColumn)
+          onDragEnd(
+            result,
+            slots,
+            timeblocks,
+            tagsColumn,
+            setTimeblocks,
+            setTagsColumn
+          )
         }
       >
         <div className="app">
