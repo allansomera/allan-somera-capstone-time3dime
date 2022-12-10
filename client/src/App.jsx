@@ -115,70 +115,66 @@ const onDragEnd = (
   let destColumn = {}
   if (source.droppableId !== destination.droppableId) {
     if (tagsColumn.hasOwnProperty(source.droppableId)) {
-      console.log("has property", tagsColumn.hasOwnProperty(source.droppableId))
+      // console.log("has property", tagsColumn.hasOwnProperty(source.droppableId))
       sourceColumn = tagsColumn[source.droppableId]
-      console.log("sourceColumn", sourceColumn)
       destColumn = getObject(timeblocks, destination.droppableId)[0]
-      console.log("destColumn", destColumn)
       const destTarget_idx = timeblocks.findIndex(
         (o) => o.day_timeblock_id === destination.droppableId
       )
-      console.log("destTarget_idx", destTarget_idx)
       const sourceItems = [...sourceColumn.tags]
-      console.log("sourceitems", sourceItems)
-      // const destItems = { ...destColumn }
-      // console.log("destItems", destItems)
       const [removed] = sourceItems.splice(source.index, 1)
-      console.log("removed", removed)
-      // destItems.splice(destination.index, 0, removed)
-      // keep the remaining slot items but only target the destination
-
       const destColumn_copy = {
         ...destColumn,
         type: removed.name,
       }
-      console.log("destColumn_copy", destColumn_copy)
-
       const new_timeblocks = [...timeblocks]
-      // Object.assign([...new_timeblocks], { [destTarget_idx]: destColumn_copy })
       new_timeblocks[destTarget_idx] = destColumn_copy
-      console.log("new_timeblocks", new_timeblocks)
       setTimeblocks(new_timeblocks)
-      // console.log("dragend timeblocks", timeblocks)
       setTagsColumn(tagsColumn)
-      // console.log("current state of slots", slots)
     } else {
-      sourceColumn = slots[source.droppableId]
-      destColumn = slots[destination.droppableId]
-      const sourceItems = [...sourceColumn.tags]
-      const destItems = [...destColumn.tags]
-      const [removed] = sourceItems.splice(source.index, 1)
-      destItems.splice(destination.index, 0, removed)
-      setSlots({
-        ...slots,
-        [source.droppableId]: {
-          ...sourceColumn,
-          tags: sourceItems,
-        },
-        [destination.droppableId]: {
-          ...destColumn,
-          tags: destItems,
-        },
-      })
+      sourceColumn = getObject(timeblocks, source.droppableId)[0]
+      destColumn = getObject(timeblocks, destination.droppableId)[0]
+      // find source index
+      const sourceTarget_idx = timeblocks.findIndex(
+        (o) => o.day_timeblock_id === source.droppableId
+      )
+      // find destination index
+      const destTarget_idx = timeblocks.findIndex(
+        (o) => o.day_timeblock_id === destination.droppableId
+      )
+
+      // change source timeslot type to null
+      const sourceColumn_copy = {
+        ...sourceColumn,
+        type: null,
+      }
+
+      // change destination timeslot to a copu of the source
+      const destColumn_copy = {
+        ...destColumn,
+        type: sourceColumn.type,
+      }
+      const new_timeblocks = [...timeblocks]
+      new_timeblocks[sourceTarget_idx] = sourceColumn_copy
+      new_timeblocks[destTarget_idx] = destColumn_copy
+      setTimeblocks(new_timeblocks)
     }
   } else {
-    console.log("same droppableId")
-    const slot = slots[source.droppableId]
-    const copiedItems = [...slot.tags]
-    const [removed] = copiedItems.splice(source.index, 1)
-    copiedItems.splice(destination.index, 0, removed)
-    setSlots({
-      ...slots,
-      [source.droppableId]: {
-        ...slot,
-        tags: copiedItems,
-      },
-    })
+    // console.log("same droppableId")
+    // console.log("result", result)
+    // console.log("source", source)
+    // console.log("destination", destination)
+    // sourceColumn = getObject(timeblocks, source.droppableId)
+    // destColumn = getObject(timeblocks, destination.droppableId)
+    // const [removed] = copiedItems.splice(source.index, 1)
+    // copiedItems.splice(destination.index, 0, removed)
+    // setSlots({
+    //   ...slots,
+    //   [source.droppableId]: {
+    //     ...slot,
+    //     tags: copiedItems,
+    //   },
+    // })
   }
 }
 
