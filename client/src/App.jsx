@@ -97,7 +97,14 @@ const getObject = (timeblocks, dest) => {
   })
 }
 
-const onDragEnd = (result, timeblocks, tagsColumn, setTagsColumn) => {
+const onDragEnd = (
+  result,
+  slots,
+  timeblocks,
+  tagsColumn,
+  setTimeblocks,
+  setTagsColumn
+) => {
   if (!result.destination) return
   // console.log("slots", slots)
   const { source, destination } = result
@@ -107,30 +114,37 @@ const onDragEnd = (result, timeblocks, tagsColumn, setTagsColumn) => {
   let sourceColumn = {}
   let destColumn = {}
   if (source.droppableId !== destination.droppableId) {
-    // console.log("has property", tagsColumn.hasOwnProperty(source.droppableId))
     if (tagsColumn.hasOwnProperty(source.droppableId)) {
+      console.log("has property", tagsColumn.hasOwnProperty(source.droppableId))
       sourceColumn = tagsColumn[source.droppableId]
       console.log("sourceColumn", sourceColumn)
       destColumn = getObject(timeblocks, destination.droppableId)[0]
       console.log("destColumn", destColumn)
+      const destTarget_idx = timeblocks.findIndex(
+        (o) => o.day_timeblock_id === destination.droppableId
+      )
+      console.log("destTarget_idx", destTarget_idx)
       const sourceItems = [...sourceColumn.tags]
       console.log("sourceitems", sourceItems)
-      const destItems = { ...destColumn }
-      console.log("destItems", destItems)
+      // const destItems = { ...destColumn }
+      // console.log("destItems", destItems)
       const [removed] = sourceItems.splice(source.index, 1)
       console.log("removed", removed)
       // destItems.splice(destination.index, 0, removed)
       // keep the remaining slot items but only target the destination
-      const destitems_copy = [...destItems]
-      const tag = destitems_copy[0].name
-      console.log("destitems_copy", destitems_copy[0].name)
-      setSlots({
-        ...slots,
-        [destination.droppableId]: {
-          ...destColumn,
-          tags: [{ id: uuidv4(), name: tag }],
-        },
-      })
+
+      const destColumn_copy = {
+        ...destColumn,
+        type: removed.name,
+      }
+      console.log("destColumn_copy", destColumn_copy)
+
+      const new_timeblocks = [...timeblocks]
+      // Object.assign([...new_timeblocks], { [destTarget_idx]: destColumn_copy })
+      new_timeblocks[destTarget_idx] = destColumn_copy
+      console.log("new_timeblocks", new_timeblocks)
+      setTimeblocks(new_timeblocks)
+      // console.log("dragend timeblocks", timeblocks)
       setTagsColumn(tagsColumn)
       // console.log("current state of slots", slots)
     } else {
@@ -176,10 +190,10 @@ function App() {
   // console.log(slots)
   // console.log(Object.entries(slots))
   // onDragEnd={(result) => onDragEnd(result, slots, setSlots)}
-  // useEffect(() => {
-  //   // console.log("current state of slots", slots)
-  //   console.log("current state of timeblock", timeblocks)
-  // }, [slots, timeblocks])
+  useEffect(() => {
+    // console.log("current state of slots", slots)
+    console.log("current state of timeblock", timeblocks)
+  }, [slots, timeblocks])
 
   useEffect(() => {
     const getTimeblocks = async () => {
@@ -193,7 +207,14 @@ function App() {
     <>
       <DragDropContext
         onDragEnd={(result) =>
-          onDragEnd(result, timeblocks, tagsColumn, setTagsColumn)
+          onDragEnd(
+            result,
+            slots,
+            timeblocks,
+            tagsColumn,
+            setTimeblocks,
+            setTagsColumn
+          )
         }
       >
         <div className="app">
