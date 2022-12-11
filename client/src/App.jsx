@@ -7,13 +7,15 @@ import { Routes, Route, useNavigate, Navigate } from "react-router-dom"
 
 // import TimeblockContainer from "./components/timeblock-container/TimeblockContainer"
 import TimeblockContainer from "@/components/timeblock-container/TimeblockContainer"
-import Homepage from "@/pages/homepage/Homepage"
+import User from "@/pages/user/User"
 
 const App = () => {
+  const u_id = "2922c286-16cd-4d43-ab98-c79f698aeab0"
   return (
     <>
       <Routes>
-        <Route path="/users/*" element={<Homepage key={1} />} />
+        <Route path="*" element={<Navigate to={`/user/${u_id}`} replace />} />
+        <Route path="/user/*" element={<User />} />
       </Routes>
     </>
   )

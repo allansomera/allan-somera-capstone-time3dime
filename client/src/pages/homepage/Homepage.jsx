@@ -1,27 +1,14 @@
 import "./Homepage.scss"
 
 import React, { useState, useEffect } from "react"
+import { useNavigate, useParams } from "react-router-dom"
 import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd"
 import { v4 as uuidv4 } from "uuid"
 import axios from "axios"
+
 // import TimeblockContainer from "@/components/TimeblockContainer"
 import TimeblockContainer from "@/components/timeblock-container/TimeblockContainer"
-
-const itemsFromBackend = [
-  { id: uuidv4(), content: "First task" },
-  { id: uuidv4(), content: "Second task" },
-]
-
-const columnsFromBackend = {
-  [uuidv4()]: {
-    name: "Todo",
-    items: itemsFromBackend,
-  },
-  [uuidv4()]: {
-    name: "Todo2",
-    items: [],
-  },
-}
+import DateComp from "@/components/date-comp/DateComp"
 
 const tags = [
   { id: uuidv4(), name: "sleep" },
@@ -31,57 +18,6 @@ const tags = [
   { id: uuidv4(), name: "free" },
 ]
 
-const timeSlots = {
-  [uuidv4()]: {
-    slot: "1",
-    tags: [{ id: uuidv4(), name: "sleep" }],
-  },
-  [uuidv4()]: {
-    slot: "2",
-    tags: [],
-  },
-  [uuidv4()]: {
-    slot: "3",
-    tags: [],
-  },
-  [uuidv4()]: {
-    slot: "4",
-    tags: [],
-  },
-  [uuidv4()]: {
-    slot: "5",
-    tags: [],
-  },
-  [uuidv4()]: {
-    slot: "6",
-    tags: [],
-  },
-  [uuidv4()]: {
-    slot: "7",
-    tags: [],
-  },
-  [uuidv4()]: {
-    slot: "8",
-    tags: [],
-  },
-  [uuidv4()]: {
-    slot: "9",
-    tags: [],
-  },
-  [uuidv4()]: {
-    slot: "10",
-    tags: [],
-  },
-  [uuidv4()]: {
-    slot: "11",
-    tags: [],
-  },
-  [uuidv4()]: {
-    slot: "12",
-    tags: [],
-  },
-}
-
 const tagSlot = {
   [uuidv4()]: {
     slot: "tags",
@@ -90,7 +26,7 @@ const tagSlot = {
 }
 
 const URL = "http://localhost:8080"
-const u_id = "2922c286-16cd-4d43-ab98-c79f698aeab0"
+// const u_id = "2922c286-16cd-4d43-ab98-c79f698aeab0"
 
 const getObject = (timeblocks, dest) => {
   return timeblocks.filter((o) => {
@@ -100,7 +36,6 @@ const getObject = (timeblocks, dest) => {
 
 const onDragEnd = (
   result,
-  slots,
   timeblocks,
   tagsColumn,
   setTimeblocks,
@@ -180,7 +115,11 @@ const onDragEnd = (
 }
 
 const Homepage = () => {
-  const [slots, setSlots] = useState(timeSlots)
+  const nav = useNavigate()
+  // nav(`/users/${u_id}`)
+
+  const { id } = useParams()
+
   const [tagsColumn, setTagsColumn] = useState(tagSlot)
   const [timeblocks, setTimeblocks] = useState([])
 
@@ -194,7 +133,7 @@ const Homepage = () => {
 
   useEffect(() => {
     const getTimeblocks = async () => {
-      const { data } = await axios.get(`${URL}/users/${u_id}/days/2`)
+      const { data } = await axios.get(`${URL}/users/${id}/days/2`)
       setTimeblocks(data)
     }
     getTimeblocks()
@@ -206,7 +145,6 @@ const Homepage = () => {
         onDragEnd={(result) =>
           onDragEnd(
             result,
-            slots,
             timeblocks,
             tagsColumn,
             setTimeblocks,
@@ -215,6 +153,14 @@ const Homepage = () => {
         }
       >
         <div className="homepage">
+          <div className="testcolumn">
+            <div className="datepicker">
+              <DateComp />
+            </div>
+            <div className="tc_button">
+              <button>ADD NEW DAY</button>
+            </div>
+          </div>
           <div className="column1">
             {timeblocks.map((droppable_item) => {
               return <TimeblockContainer droppable_item={droppable_item} />
