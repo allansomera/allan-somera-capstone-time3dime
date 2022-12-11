@@ -7,7 +7,8 @@ exports.up = function (knex) {
     // table.primary(["date", "month", "year"], "day_id")
     table.increments("day_id").primary()
     table
-      .uuid("fk_user_id")
+      .integer("fk_user_id")
+      .unsigned()
       .references("users.id")
       .onUpdate("CASCADE")
       .onDelete("CASCADE")
