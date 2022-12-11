@@ -1,4 +1,4 @@
-import "./Users.scss"
+import "./User.scss"
 import React, {
   useEffect,
   useState,
@@ -9,7 +9,7 @@ import React, {
 import { Routes, Route, useLocation } from "react-router-dom"
 import Homepage from "@/pages/homepage/Homepage"
 
-const Users = () => {
+const User = () => {
   return (
     <>
       <Routes>
@@ -20,4 +20,4 @@ const Users = () => {
   )
 }
 
-export default Users
+export default User

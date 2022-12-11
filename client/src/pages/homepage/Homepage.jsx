@@ -1,10 +1,11 @@
 import "./Homepage.scss"
 
 import React, { useState, useEffect } from "react"
-import { useNavigate } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd"
 import { v4 as uuidv4 } from "uuid"
 import axios from "axios"
+
 // import TimeblockContainer from "@/components/TimeblockContainer"
 import TimeblockContainer from "@/components/timeblock-container/TimeblockContainer"
 import DateComp from "@/components/date-comp/DateComp"
@@ -25,7 +26,7 @@ const tagSlot = {
 }
 
 const URL = "http://localhost:8080"
-const u_id = "2922c286-16cd-4d43-ab98-c79f698aeab0"
+// const u_id = "2922c286-16cd-4d43-ab98-c79f698aeab0"
 
 const getObject = (timeblocks, dest) => {
   return timeblocks.filter((o) => {
@@ -116,6 +117,9 @@ const onDragEnd = (
 const Homepage = () => {
   const nav = useNavigate()
   // nav(`/users/${u_id}`)
+
+  const { id } = useParams()
+
   const [tagsColumn, setTagsColumn] = useState(tagSlot)
   const [timeblocks, setTimeblocks] = useState([])
 
@@ -129,7 +133,7 @@ const Homepage = () => {
 
   useEffect(() => {
     const getTimeblocks = async () => {
-      const { data } = await axios.get(`${URL}/users/${u_id}/days/2`)
+      const { data } = await axios.get(`${URL}/users/${id}/days/2`)
       setTimeblocks(data)
     }
     getTimeblocks()
