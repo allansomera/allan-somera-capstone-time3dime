@@ -7,8 +7,6 @@ exports.seed = async function (knex) {
   await knex("day").del()
   await knex("day").insert([
     {
-      // day_id: "7f3104bb-48cd-4e32-b811-055b901ddfae",
-
       day_id: 1,
       fk_user_id: "1",
       date: "01",
@@ -16,7 +14,6 @@ exports.seed = async function (knex) {
       year: "2022",
     },
     {
-      // day_id: "d69e2837-52e0-4f18-81fb-7752aedd1358",
       day_id: 2,
       fk_user_id: "1",
       date: "01",
