@@ -10,7 +10,7 @@ import TimeblockContainer from "@/components/timeblock-container/TimeblockContai
 import User from "@/pages/user/User"
 
 const App = () => {
-  const u_id = "2922c286-16cd-4d43-ab98-c79f698aeab0"
+  const u_id = "1"
   return (
     <>
       <Routes>

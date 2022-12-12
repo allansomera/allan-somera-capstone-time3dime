@@ -123,6 +123,12 @@ const Homepage = () => {
   const [tagsColumn, setTagsColumn] = useState(tagSlot)
   const [timeblocks, setTimeblocks] = useState([])
 
+  const btn_handler = async () => {
+    const payload = { day_data: timeblocks }
+    const res = await axios.patch(`${URL}/users/${id}/day/2`, payload)
+    console.log(res)
+  }
+
   // console.log(slots)
   // console.log(Object.entries(slots))
   // onDragEnd={(result) => onDragEnd(result, slots, setSlots)}
@@ -133,7 +139,7 @@ const Homepage = () => {
 
   useEffect(() => {
     const getTimeblocks = async () => {
-      const { data } = await axios.get(`${URL}/users/${id}/days/2`)
+      const { data } = await axios.get(`${URL}/users/${id}/day/2`)
       setTimeblocks(data)
     }
     getTimeblocks()
@@ -158,7 +164,7 @@ const Homepage = () => {
               <DateComp />
             </div>
             <div className="tc_button">
-              <button>ADD NEW DAY</button>
+              <button onClick={() => btn_handler()}>SAVE</button>
             </div>
           </div>
           <div className="column1">

@@ -7,7 +7,6 @@ exports.up = function (knex) {
     .dropTableIfExists("dayByTimeblock")
     .createTable("dayByTimeblock", (table) => {
       table.uuid("dayByTimeblock_id")
-      table.uuid("draggable_id")
       table
         .integer("fk_day_id")
         .unsigned()
@@ -20,7 +19,8 @@ exports.up = function (knex) {
         .onUpdate("CASCADE")
         .onDelete("CASCADE")
       table
-        .tinyint("fk_tag_id")
+        .integer("fk_tag_id")
+        .unsigned()
         .references("tags.tag_id")
         .onUpdate("CASCADE")
         .onDelete("CASCADE")

@@ -8,7 +8,8 @@ exports.up = function (knex) {
     .createTable("userday", (table) => {
       table.uuid("userday_id").primary()
       table
-        .uuid("fk_user_id")
+        .integer("fk_user_id")
+        .unsigned()
         .references("users.id")
         .onUpdate("CASCADE")
         .onDelete("CASCADE")
