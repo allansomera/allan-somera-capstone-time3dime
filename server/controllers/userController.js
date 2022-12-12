@@ -85,7 +85,12 @@ exports.updateDay = (req, res) => {
 exports.userTags = (req, res) => {
   const { id } = req.params
   knex
-    .select("ubt.fk_user_id as user_id", "t.tag_id as tag_id", "t.type as type")
+    .select(
+      "ubt.usertag_id as usertag_id",
+      "ubt.fk_user_id as user_id",
+      "t.tag_id as tag_id",
+      "t.type as type"
+    )
     .from("userbytags as ubt")
     .join("tags as t", "t.tag_id", "=", "ubt.fk_tag_id")
     .where("ubt.fk_user_id", parseInt(id))
