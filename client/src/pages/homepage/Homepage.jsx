@@ -10,20 +10,13 @@ import axios from "axios"
 import TimeblockContainer from "@/components/timeblock-container/TimeblockContainer"
 import DateComp from "@/components/date-comp/DateComp"
 
-const tags = [
-  { id: uuidv4(), name: "sleep" },
-  { id: uuidv4(), name: "work" },
-  { id: uuidv4(), name: "gym" },
-  { id: uuidv4(), name: "eat" },
-  { id: uuidv4(), name: "free" },
-]
-
-const tagSlot = {
-  [uuidv4()]: {
-    slot: "tags",
-    tags: tags,
-  },
-}
+// const tags = [
+//   { id: uuidv4(), name: "sleep" },
+//   { id: uuidv4(), name: "work" },
+//   { id: uuidv4(), name: "gym" },
+//   { id: uuidv4(), name: "eat" },
+//   { id: uuidv4(), name: "free" },
+// ]
 
 const URL = "http://localhost:8080"
 // const u_id = "2922c286-16cd-4d43-ab98-c79f698aeab0"
@@ -44,9 +37,9 @@ const onDragEnd = (
   if (!result.destination) return
   // console.log("slots", slots)
   const { source, destination } = result
-  // console.log("result", result)
-  // console.log("source", source)
-  // console.log("destination", destination)
+  console.log("result", result)
+  console.log("source", source)
+  console.log("destination", destination)
   let sourceColumn = {}
   let destColumn = {}
   if (source.droppableId !== destination.droppableId) {
@@ -61,7 +54,7 @@ const onDragEnd = (
       const [removed] = sourceItems.splice(source.index, 1)
       const destColumn_copy = {
         ...destColumn,
-        type: removed.name,
+        type: removed.type,
       }
       const new_timeblocks = [...timeblocks]
       new_timeblocks[destTarget_idx] = destColumn_copy
@@ -115,11 +108,30 @@ const onDragEnd = (
   }
 }
 
-const Homepage = () => {
-  const { id } = useParams()
+const backend_tags = await axios.get(`${URL}/users/1/tags`)
 
-  const [tagsColumn, setTagsColumn] = useState(tagSlot)
+const tagSlot = {
+  [uuidv4()]: {
+    slot: "tags",
+    tags: backend_tags.data,
+  },
+}
+
+const Homepage = () => {
+  const { id, day_id } = useParams()
+
   const [timeblocks, setTimeblocks] = useState([])
+  // const [usertags, setUserTags] = useState([])
+  const [tagsColumn, setTagsColumn] = useState(tagSlot)
+
+  useEffect(() => {
+    const getTimeblocks = async () => {
+      const { data } = await axios.get(`${URL}/users/${id}/day/${day_id}`)
+      setTimeblocks(data)
+      // setUserTags(tags.data)
+    }
+    getTimeblocks()
+  }, [])
 
   const btn_handler = async () => {
     const payload = { day_data: timeblocks }
@@ -130,19 +142,12 @@ const Homepage = () => {
   // console.log(slots)
   // console.log(Object.entries(slots))
   // onDragEnd={(result) => onDragEnd(result, slots, setSlots)}
+
   // useEffect(() => {
   //   // console.log("current state of slots", slots)
   //   console.log("current state of timeblock", timeblocks)
-  // }, [slots, timeblocks])
-
-  useEffect(() => {
-    const getTimeblocks = async () => {
-      const { data } = await axios.get(`${URL}/users/${id}/day/2`)
-      setTimeblocks(data)
-    }
-    getTimeblocks()
-  }, [])
-
+  //   console.log("current state of usertags", usertags)
+  // }, [usertags, timeblocks])
   return (
     <>
       <DragDropContext
@@ -193,8 +198,8 @@ const Homepage = () => {
                           {slot.tags.map((item, index) => {
                             return (
                               <Draggable
-                                key={item.id}
-                                draggableId={item.id}
+                                key={item.usertag_id}
+                                draggableId={String(item.usertag_id)}
                                 index={index}
                               >
                                 {(provided, snapshot) => {
@@ -215,7 +220,7 @@ const Homepage = () => {
                                         ...provided.draggableProps.style,
                                       }}
                                     >
-                                      {item.name}
+                                      {item.type}
                                     </div>
                                   )
                                 }}
