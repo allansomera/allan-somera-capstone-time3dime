@@ -1,7 +1,7 @@
 import "./Homepage.scss"
 
 import React, { useState, useEffect } from "react"
-import { useNavigate, useParams } from "react-router-dom"
+import { useParams } from "react-router-dom"
 import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd"
 import { v4 as uuidv4 } from "uuid"
 import axios from "axios"
@@ -70,6 +70,7 @@ const onDragEnd = (
     } else {
       sourceColumn = getObject(timeblocks, source.droppableId)[0]
       destColumn = getObject(timeblocks, destination.droppableId)[0]
+
       // find source index
       const sourceTarget_idx = timeblocks.findIndex(
         (o) => o.day_timeblock_id === source.droppableId
@@ -115,9 +116,6 @@ const onDragEnd = (
 }
 
 const Homepage = () => {
-  const nav = useNavigate()
-  // nav(`/users/${u_id}`)
-
   const { id } = useParams()
 
   const [tagsColumn, setTagsColumn] = useState(tagSlot)

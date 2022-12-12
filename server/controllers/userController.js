@@ -37,7 +37,6 @@ exports.userDay = (req, res) => {
       "dbt.dayByTimeblock_id as day_timeblock_id",
       "dbt.fk_timeblock_id",
       "dbt.fk_tag_id",
-      "dbt.draggable_id",
       "t.type"
     )
     .from("users as u")
@@ -78,11 +77,26 @@ exports.updateDay = (req, res) => {
               .andWhere("fk_timeblock_id", "=", fk_timeblock_id)
               .update({ fk_tag_id: parseInt(tag_id.toString()) })
           )
-          // .then(() => {})
-          // .then((d) => {
-          //   res.status(200).json(d)
-          // })
         )
       })
   })
 }
+
+exports.userTags = (req, res) => {
+  const { id } = req.params
+  knex
+    .select("ubt.fk_user_id as user_id", "t.tag_id as tag_id", "t.type as type")
+    .from("userbytags as ubt")
+    .join("tags as t", "t.tag_id", "=", "ubt.fk_tag_id")
+    .where("ubt.fk_user_id", parseInt(id))
+    .then((data) => {
+      res.status(200).json(data)
+    })
+    .catch((err) =>
+      res
+        .status(400)
+        .send(`Error retrieving userbytags for user ${req.params.id} ${err}`)
+    )
+}
+
+// exports.addTag = (req, res) => {}
