@@ -12,4 +12,6 @@ router
   .get(userController.userDay)
   .patch(userController.updateDay)
 
+router.route("/:id/tags").get(userController.userTags)
+
 module.exports = router
