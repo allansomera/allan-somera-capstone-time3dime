@@ -118,7 +118,7 @@ const tagSlot = {
 }
 
 const Homepage = () => {
-  const { id } = useParams()
+  const { id, day_id } = useParams()
 
   const [timeblocks, setTimeblocks] = useState([])
   // const [usertags, setUserTags] = useState([])
@@ -126,7 +126,7 @@ const Homepage = () => {
 
   useEffect(() => {
     const getTimeblocks = async () => {
-      const { data } = await axios.get(`${URL}/users/${id}/day/2`)
+      const { data } = await axios.get(`${URL}/users/${id}/day/${day_id}`)
       setTimeblocks(data)
       // setUserTags(tags.data)
     }

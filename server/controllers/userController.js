@@ -104,4 +104,4 @@ exports.userTags = (req, res) => {
     )
 }
 
-// exports.addTag = (req, res) => {}
+exports.addUserDay = (req, res) => {}
