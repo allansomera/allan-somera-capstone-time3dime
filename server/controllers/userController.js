@@ -32,7 +32,6 @@ exports.userDay = (req, res) => {
   knex
     .select(
       "u.id as user_id",
-      // "ud.userday_id as userday_id",
       "d.day_id as day_id",
       "dbt.dayByTimeblock_id as day_timeblock_id",
       "dbt.fk_timeblock_id",
@@ -40,7 +39,6 @@ exports.userDay = (req, res) => {
       "t.type"
     )
     .from("users as u")
-    // .leftJoin("userday as ud", "u.id", "=", "ud.fk_user_id")
     .leftJoin("day as d", "u.id", "=", "d.fk_user_id")
     .leftJoin("dayByTimeblock as dbt", "d.day_id", "=", "dbt.fk_day_id")
     .leftJoin("tags as t", "dbt.fk_tag_id", "=", "t.tag_id")
@@ -62,7 +60,6 @@ exports.userDay = (req, res) => {
 }
 
 exports.updateDay = (req, res) => {
-  // console.log("udpate url", req.params.id)
   const { id, day_id } = req.params
   req.body.day_data.forEach((i) => {
     const { fk_tag_id, type, fk_timeblock_id } = i
@@ -104,8 +101,10 @@ exports.userTags = (req, res) => {
     )
 }
 
+//TODO: change to post, so i can add the correct dates
 exports.addUserDay = (req, res) => {
   const { id, day_id } = req.params
+
   knex("temp_table")
     .del()
     .then(() => {
@@ -137,16 +136,20 @@ exports.addUserDay = (req, res) => {
             })
         })
     })
-
-  // const update_tag_id = () => {
-  //   return knex("dayByTimeblock").update({})
-  // }
 }
-// exports.checkday = (req, res) => {
-//   const { id, day_id } = req.params
-//   knex.select(
-//     "u.id as user_id",
-//     "d.day_id as day_id",
-//     ."d.date",
-//   )
-// }
+
+exports.checkDay = (req, res) => {
+  const { id, day_id } = req.params
+  console.log("checkDay req.body", req.body)
+  const { day, month, year } = req.body
+  knex
+    .select("*")
+    .from("day as d")
+    .where("d.fk_user_id", id)
+    .andWhere("d.date", parseInt(day))
+    .andWhere("d.month", parseInt(month))
+    .andWhere("d.year", parseInt(year))
+    .then((data) => {
+      res.status(200).json(data)
+    })
+}
