@@ -5,12 +5,17 @@
     height: 100%;
 }
 
-.column1 {
+.column1, .column2, .column3, .column4 {
+    text-align: center;
+    color: white;
+    background-color: grey;
+    width: 200px;
     display: flex;
     flex-direction: column;
+    margin-right: 16px;
 }
 
-.column2{
+.column5{
     margin-left: 20px;
 }
 

@@ -185,11 +185,30 @@ const Homepage = () => {
             </div>
           </div>
           <div className="column1">
-            {timeblocks.map((droppable_item) => {
+            column1
+            {timeblocks.slice(0, 12).map((droppable_item) => {
               return <TimeblockContainer droppable_item={droppable_item} />
             })}
           </div>
           <div className="column2">
+            column2
+            {timeblocks.slice(12, 24).map((droppable_item) => {
+              return <TimeblockContainer droppable_item={droppable_item} />
+            })}
+          </div>
+          <div className="column3">
+            column3
+            {timeblocks.slice(24, 36).map((droppable_item) => {
+              return <TimeblockContainer droppable_item={droppable_item} />
+            })}
+          </div>
+          <div className="column4">
+            column4
+            {timeblocks.slice(36, 48).map((droppable_item) => {
+              return <TimeblockContainer droppable_item={droppable_item} />
+            })}
+          </div>
+          <div className="column5">
             {Object.entries(tagSlot).map(([id, slot]) => {
               return (
                 <div className="timeslot" key={id}>
