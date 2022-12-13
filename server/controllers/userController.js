@@ -104,4 +104,47 @@ exports.userTags = (req, res) => {
     )
 }
 
-exports.addUserDay = (req, res) => {}
+exports.addUserDay = (req, res) => {
+  const { id, day_id } = req.params
+  // const select_dbt_query = knex
+  //   .distinct()
+  //   .select("dbt.*")
+  //   .from("dayByTimeblock as dbt")
+  //   .where("dbt.fk_day_id", "=", 1)
+  knex("temp_table")
+    .del()
+    .then(() => {
+      knex
+        .insert(
+          knex
+            .select("dbt.*")
+            .from("dayByTimeblock as dbt")
+            .where("dbt.fk_day_id", "=", 1)
+        )
+        .into("temp_table")
+        .then(() => {
+          // console.log(data)
+          // res.status(200).json(data)
+          knex
+            .raw(
+              "insert into day (fk_user_id, date, month, year) values (1,12,12,2022);"
+            )
+            .then(() => {
+              // res.status(200).json(data)
+              // knex('temb')
+            })
+        })
+    })
+
+  // const update_tag_id = () => {
+  //   return knex("dayByTimeblock").update({})
+  // }
+}
+// exports.checkday = (req, res) => {
+//   const { id, day_id } = req.params
+//   knex.select(
+//     "u.id as user_id",
+//     "d.day_id as day_id",
+//     ."d.date",
+//   )
+// }

@@ -127,6 +127,9 @@ const Homepage = () => {
   useEffect(() => {
     const getTimeblocks = async () => {
       const { data } = await axios.get(`${URL}/users/${id}/day/${day_id}`)
+      console.log("data", data)
+      // if (!data) console.log(`no data for user ${id} for ${day_id} `)
+
       setTimeblocks(data)
       // setUserTags(tags.data)
     }
@@ -135,7 +138,7 @@ const Homepage = () => {
 
   const btn_handler = async () => {
     const payload = { day_data: timeblocks }
-    const res = await axios.patch(`${URL}/users/${id}/day/2`, payload)
+    const res = await axios.patch(`${URL}/users/${id}/day/${day_id}`, payload)
     console.log(res)
   }
 
