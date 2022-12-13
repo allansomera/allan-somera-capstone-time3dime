@@ -119,6 +119,7 @@ const tagSlot = {
 
 const Homepage = () => {
   const { id, day_id } = useParams()
+  const params = useParams()
 
   const [timeblocks, setTimeblocks] = useState([])
   // const [usertags, setUserTags] = useState([])
@@ -134,6 +135,17 @@ const Homepage = () => {
     }
     getTimeblocks()
   }, [])
+
+  useEffect(() => {
+    const getTimeblocks = async () => {
+      const { data } = await axios.get(`${URL}/users/${id}/day/${day_id}`)
+      // console.log("data", data)
+      // if (!data) console.log(`no data for user ${id} for ${day_id} `)
+      setTimeblocks(data)
+      // setUserTags(tags.data)
+    }
+    getTimeblocks()
+  }, [params])
 
   const btn_handler = async () => {
     const payload = { day_data: timeblocks }

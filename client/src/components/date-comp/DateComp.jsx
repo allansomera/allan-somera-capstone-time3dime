@@ -8,7 +8,7 @@ import "react-datepicker/dist/react-datepicker.css"
 const URL = "http://localhost:8080"
 const DateComp = () => {
   let { id, day_id } = useParams()
-  let nav = useNavigate()
+  let navigate = useNavigate()
 
   const [date, setDate] = useState(new Date())
   const onChange = async (date) => {
@@ -22,13 +22,20 @@ const DateComp = () => {
     const { data } = await axios.post(`${URL}/users/${id}/day/check`, payload)
     console.log("res data", data)
     if (!data.length) {
-      const { new_data } = await axios.post(
-        `${URL}/users/${id}/day/new`,
-        payload
+      const new_data = await axios.post(`${URL}/users/${id}/day/new`, payload)
+      console.log("new_data", new_data.data)
+      const { insertId } = new_data.data[0]
+      console.log("insertId", insertId)
+      const new_day = await axios.post(
+        `${URL}/users/${id}/day/${insertId}/add`,
+        {}
       )
-      // nav(`/user/${id}/day/`)
+      navigate(`/user/${id}/day/${insertId}`)
     } else {
-      // console.log("found timeslots")
+      console.log("found timeslots")
+      console.log("data exists", data)
+      const { day_id, fk_user_id } = data[0]
+      navigate(`/user/${fk_user_id}/day/${day_id}`)
     }
   }
 

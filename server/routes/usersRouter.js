@@ -16,5 +16,5 @@ router
 
 router.route("/:id/tags").get(userController.userTags)
 
-router.route("/:id/day/:day_id/add").get(userController.addUserDay)
+router.route("/:id/day/:day_id/add").post(userController.addUserDay)
 module.exports = router
