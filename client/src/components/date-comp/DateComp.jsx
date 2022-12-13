@@ -12,12 +12,8 @@ const DateComp = () => {
 
   const [date, setDate] = useState(new Date())
   const onChange = async (date) => {
+    setDate(date)
     const [day, month, year] = date.toLocaleString().split(",")[0].split("/")
-    // nav(`/user/1/day/`)
-    // console.log("date", day)
-    // console.log("month", month)
-    // console.log("year", year)
-
     const payload = {
       day,
       month,
@@ -25,8 +21,17 @@ const DateComp = () => {
     }
     const { data } = await axios.post(`${URL}/users/${id}/day/check`, payload)
     console.log("res data", data)
-    setDate(date)
+    if (!data.length) {
+      const { new_data } = await axios.post(
+        `${URL}/users/${id}/day/new`,
+        payload
+      )
+      // nav(`/user/${id}/day/`)
+    } else {
+      // console.log("found timeslots")
+    }
   }
+
   return <DatePicker selected={date} onChange={onChange} />
 }
 

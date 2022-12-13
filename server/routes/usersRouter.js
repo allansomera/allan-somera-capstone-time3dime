@@ -8,6 +8,7 @@ router.route("/:id").get(userController.singleUser)
 
 router.route("/:id/day").get(userController.userDay)
 router.route("/:id/day/check").post(userController.checkDay)
+router.route("/:id/day/new").post(userController.insertNewDay)
 router
   .route("/:id/day/:day_id")
   .get(userController.userDay)

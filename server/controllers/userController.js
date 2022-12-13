@@ -101,7 +101,19 @@ exports.userTags = (req, res) => {
     )
 }
 
-//TODO: change to post, so i can add the correct dates
+exports.insertNewDay = (req, res) => {
+  const { id } = req.params
+  // console.log("checkDay req.body", req.body)
+  const { day, month, year } = req.body
+  knex
+    .raw(
+      `insert into day (fk_user_id, date, month, year) values (${id},${day},${month},${year});`
+    )
+    .then((data) => {
+      res.status(200).json(data)
+    })
+}
+
 exports.addUserDay = (req, res) => {
   const { id, day_id } = req.params
 
@@ -117,21 +129,15 @@ exports.addUserDay = (req, res) => {
         )
         .into("temp_table")
         .then(() => {
-          knex
-            .raw(
-              "insert into day (fk_user_id, date, month, year) values (1,12,12,2022);"
-            )
+          knex("temp_table")
+            .where("fk_day_id", "=", 1)
+            .update({ fk_day_id: day_id, fk_tag_id: null })
             .then(() => {
-              knex("temp_table")
-                .where("fk_day_id", "=", 1)
-                .update({ fk_day_id: day_id, fk_tag_id: null })
-                .then(() => {
-                  knex
-                    .insert(knex.select("temp_table.*").from("temp_table"))
-                    .into("dayByTimeblock")
-                    .then((data) => {
-                      res.status(200).json(data)
-                    })
+              knex
+                .insert(knex.select("temp_table.*").from("temp_table"))
+                .into("dayByTimeblock")
+                .then((data) => {
+                  res.status(200).json(data)
                 })
             })
         })
@@ -139,7 +145,7 @@ exports.addUserDay = (req, res) => {
 }
 
 exports.checkDay = (req, res) => {
-  const { id, day_id } = req.params
+  const { id } = req.params
   console.log("checkDay req.body", req.body)
   const { day, month, year } = req.body
   knex
