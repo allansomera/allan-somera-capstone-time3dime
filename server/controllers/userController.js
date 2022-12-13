@@ -106,11 +106,6 @@ exports.userTags = (req, res) => {
 
 exports.addUserDay = (req, res) => {
   const { id, day_id } = req.params
-  // const select_dbt_query = knex
-  //   .distinct()
-  //   .select("dbt.*")
-  //   .from("dayByTimeblock as dbt")
-  //   .where("dbt.fk_day_id", "=", 1)
   knex("temp_table")
     .del()
     .then(() => {
@@ -123,15 +118,17 @@ exports.addUserDay = (req, res) => {
         )
         .into("temp_table")
         .then(() => {
-          // console.log(data)
-          // res.status(200).json(data)
           knex
             .raw(
               "insert into day (fk_user_id, date, month, year) values (1,12,12,2022);"
             )
             .then(() => {
-              // res.status(200).json(data)
-              // knex('temb')
+              knex("temp_table")
+                .where("fk_day_id", "=", 1)
+                .update({ fk_day_id: day_id, fk_tag_id: null })
+                .then((data) => {
+                  res.status(200).json(data)
+                })
             })
         })
     })
