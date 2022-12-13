@@ -126,8 +126,13 @@ exports.addUserDay = (req, res) => {
               knex("temp_table")
                 .where("fk_day_id", "=", 1)
                 .update({ fk_day_id: day_id, fk_tag_id: null })
-                .then((data) => {
-                  res.status(200).json(data)
+                .then(() => {
+                  knex
+                    .insert(knex.select("temp_table.*").from("temp_table"))
+                    .into("dayByTimeblock")
+                    .then((data) => {
+                      res.status(200).json(data)
+                    })
                 })
             })
         })
