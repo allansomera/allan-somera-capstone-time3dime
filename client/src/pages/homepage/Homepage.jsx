@@ -21,7 +21,7 @@ import DateComp from "@/components/date-comp/DateComp"
 const tagColors = {
   gym: "#0000ff",
   free: "#ff00ff",
-  sleep: "#ffff00",
+  sleep: "#fb2600",
   school: "#6600ff",
   eat: "#976775",
   code: "#463848",

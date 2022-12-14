@@ -3,6 +3,8 @@
 }
 
 .dropContainer {
+    display: flex;
+    justify-content: center;
     overflow: hidden;
     border: 2px solid black;
     margin-top: 10px;
@@ -10,7 +12,7 @@
     padding-bottom: 5px;
     border-radius: 5px;
     box-shadow: black 8px 8px;
-    width: 125px;
+    width: 150px;
 
     &__timeCon {
         // background-color: red;
