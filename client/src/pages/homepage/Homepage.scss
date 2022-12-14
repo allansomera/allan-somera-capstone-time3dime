@@ -5,23 +5,154 @@
     height: 100%;
 }
 
-.column1 {
+.column1, .column2, .column3, .column4 {
+    color: white;
+    background-color: #34985B;
+    width: 200px;
     display: flex;
     flex-direction: column;
+    margin-right: 16px;
+    text-align: center;
 }
 
-.column2{
+.column5{
     margin-left: 20px;
 }
 
-body {
-    background-color: #1c1c1c;
+.timeslot{
+    display: flex;
+    margin-top: 75px;
+}
+.tagcolumn-title{
+    color: #fbc800;
+    padding: 0;
+    font-size: 125px;
+    order:2;
+    margin-left: 20px;
+    writing-mode: vertical-lr;
+    // transform: scale(-1,-1);
+    font-weight: 600;
+    padding-top: 40px;
 }
 
-h2 {
-    color: white;
+
+body {
+    background-color: #34985B;
+    // background-color: #9cca8c;
 }
+
 .testcolumn{
     display: flex;
     flex-direction: column;
+    margin-left: 200px;
 }
+
+.tag {
+    &__column {
+        padding: 24px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        border: 2px solid black;
+        box-shadow: white 20px 20px;
+        border-radius: 5px;
+        width: 200px;
+    }
+    &__type{
+        // margin-top: 20px;
+        border: 2px solid black;
+        border-radius: 5px;
+        box-shadow: 8px 8px yellow;
+        // box-shadow: 8px 8px yellow, 8px 8px 0px 1px black;
+        width: 100px;
+        font-weight: 600;
+        text-transform: uppercase;
+    }
+}
+
+.project_name{
+    position: absolute;
+    left: 0;
+    top: 80px;
+    width: 200px;
+    height: 300px;
+    perspective: 200px;
+    animation: slideInFromTop 1s ease-out;
+}
+
+.capstone {
+    color: white;
+    font-size: 225px;
+    font-weight: 500;
+    line-height: 225px;
+    text-align: left;
+    transform-origin: left;
+    transform: rotateY(15deg);
+    transition-duration: .4s;
+    &:hover{
+        color: transparent;
+        cursor: pointer;
+        transform: rotateY(9deg) translateZ(0) scale(1.1);
+        -webkit-text-stroke-width: 2px;
+        -webkit-text-stroke-color: black;
+        &::first-letter{
+            color: transparent;
+        }
+    }
+    // &:hover::before{
+    //     content: "gh_";
+    // }
+    &::first-letter{
+        color: black;
+    }
+    
+
+}
+.chart{
+    position: absolute;
+    right: 400px;
+    bottom: 75px;
+    width: 100px;
+    height: 300px;
+    background-color: red;
+
+}
+
+.capstone2{
+    color: transparent;
+    font-size: 225px;
+    font-weight: 500;
+    line-height: 225px;
+    text-align: left;
+    transform-origin: left;
+    transform: rotateY(15deg);
+    transition-duration: .4s;
+    -webkit-text-stroke-width: 2px;
+    -webkit-text-stroke-color: black;
+
+    &:hover{
+        color: white;
+        cursor: pointer;
+        transform: rotateY(9deg) translateZ(0) scale(1.1);
+        &::first-letter{
+            color: black;
+        }
+    }
+    &::first-letter{
+        color: transparent;
+    }
+}
+
+@keyframes slideInFromTop {
+    0%{
+        -webkit-backface-visibility: hidden;
+        -webkit-transform: translateY(-100%) scale(.5, 1.5);
+        opacity: 0.5;
+    }100%{
+        -webkit-backface-visibility: hidden;
+        -webkit-transform: translateY(0) scale(1, 1);
+        opacity: 1;
+    }
+}
+

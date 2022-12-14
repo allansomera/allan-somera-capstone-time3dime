@@ -36,11 +36,13 @@ exports.userDay = (req, res) => {
       "dbt.dayByTimeblock_id as day_timeblock_id",
       "dbt.fk_timeblock_id",
       "dbt.fk_tag_id",
+      "tb.timeslot",
       "t.type"
     )
     .from("users as u")
     .leftJoin("day as d", "u.id", "=", "d.fk_user_id")
     .leftJoin("dayByTimeblock as dbt", "d.day_id", "=", "dbt.fk_day_id")
+    .leftJoin("timeblock as tb", "dbt.fk_timeblock_id", "=", "tb.timeblock_id")
     .leftJoin("tags as t", "dbt.fk_tag_id", "=", "t.tag_id")
     .where("u.id", parseInt(id))
     .modify((q_builder) => {

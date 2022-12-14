@@ -18,6 +18,19 @@ import DateComp from "@/components/date-comp/DateComp"
 //   { id: uuidv4(), name: "free" },
 // ]
 
+const tagColors = {
+  gym: "#0000ff",
+  free: "#ff00ff",
+  sleep: "#fb2600",
+  school: "#6600ff",
+  eat: "#fbc800",
+  code: "#463848",
+}
+
+const getColor = (type) => {
+  return tagColors[type]
+}
+
 const URL = "http://localhost:8080"
 // const u_id = "2922c286-16cd-4d43-ab98-c79f698aeab0"
 
@@ -149,7 +162,7 @@ const Homepage = () => {
 
   const btn_handler = async () => {
     const payload = { day_data: timeblocks }
-    const res = await axios.patch(`${URL}/users/${id}/day/${day_id}`, payload)
+    const res = await axios.post(`${URL}/users/${id}/day/${day_id}`, payload)
     console.log(res)
   }
 
@@ -176,6 +189,11 @@ const Homepage = () => {
         }
       >
         <div className="homepage">
+          <div className="project_name">
+            <div className="capstone">Time__</div>
+            <div className="capstone2">_Triple</div>
+            <div className="capstone">Dime__</div>
+          </div>
           <div className="testcolumn">
             <div className="datepicker">
               <DateComp />
@@ -185,27 +203,69 @@ const Homepage = () => {
             </div>
           </div>
           <div className="column1">
-            {timeblocks.map((droppable_item) => {
-              return <TimeblockContainer droppable_item={droppable_item} />
+            00:00 -- 05:30
+            {timeblocks.slice(0, 12).map((droppable_item) => {
+              return (
+                <TimeblockContainer
+                  droppable_item={droppable_item}
+                  getColor={getColor}
+                />
+              )
             })}
           </div>
           <div className="column2">
+            06:00 -- 11:30
+            {timeblocks.slice(12, 24).map((droppable_item) => {
+              return (
+                <TimeblockContainer
+                  droppable_item={droppable_item}
+                  getColor={getColor}
+                />
+              )
+            })}
+          </div>
+          <div className="column3">
+            12:00 -- 17:30
+            {timeblocks.slice(24, 36).map((droppable_item) => {
+              return (
+                <TimeblockContainer
+                  droppable_item={droppable_item}
+                  getColor={getColor}
+                />
+              )
+            })}
+          </div>
+          <div className="column4">
+            18:00 -- 23:30
+            {timeblocks.slice(36, 48).map((droppable_item) => {
+              return (
+                <TimeblockContainer
+                  droppable_item={droppable_item}
+                  getColor={getColor}
+                />
+              )
+            })}
+          </div>
+          <div className="column5">
             {Object.entries(tagSlot).map(([id, slot]) => {
               return (
                 <div className="timeslot" key={id}>
-                  <h2>{slot.slot}</h2>
+                  <div className="tagcolumn-title">
+                    {"__" + slot.slot + "-_"}
+                  </div>
                   <Droppable key={id} droppableId={id}>
                     {(provided, snapshot) => {
                       return (
                         <div
+                          className="tag__column"
                           {...provided.droppableProps}
                           ref={provided.innerRef}
                           style={{
                             background: snapshot.isDraggingOver
                               ? "lightblue"
                               : "lightgrey",
-                            padding: 4,
-                            width: 200,
+                            // padding: 20,
+                            // width: 150,
                             minHeight: 50,
                           }}
                         >
@@ -219,18 +279,25 @@ const Homepage = () => {
                                 {(provided, snapshot) => {
                                   return (
                                     <div
+                                      className="tag__type"
                                       ref={provided.innerRef}
                                       {...provided.draggableProps}
                                       {...provided.dragHandleProps}
                                       style={{
                                         userSelect: "none",
                                         padding: 16,
-                                        margin: "0 0 8px 0",
+                                        margin: "0 0 20px 0",
                                         minHeight: "30px",
                                         backgroundColor: snapshot.isDragging
                                           ? "#000000"
-                                          : "#456c86",
-                                        color: "white",
+                                          : getColor(item.type),
+                                        color: snapshot.isDragging
+                                          ? item.type === "eat"
+                                            ? "white"
+                                            : "white"
+                                          : item.type === "eat"
+                                          ? "black"
+                                          : "white",
                                         ...provided.draggableProps.style,
                                       }}
                                     >
@@ -250,6 +317,7 @@ const Homepage = () => {
               )
             })}
           </div>
+          <div className="chart"></div>
         </div>
       </DragDropContext>
     </>
