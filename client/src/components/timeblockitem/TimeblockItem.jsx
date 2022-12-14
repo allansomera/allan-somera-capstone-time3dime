@@ -18,8 +18,9 @@ const TimeblockItem = ({ item, getColor }) => {
               {...provided.dragHandleProps}
               style={{
                 userSelect: "none",
+                width: 80,
                 // padding: 16,
-                margin: "0 0 8px 0",
+                // margin: "0 0 8px 0",
                 minHeight: "10px",
                 // backgroundColor: snapshot.isDragging ? "#000000" : "#456c86",
                 backgroundColor: snapshot.isDragging ? "#000000" : "#ffffff",

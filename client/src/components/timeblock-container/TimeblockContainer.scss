@@ -1,15 +1,26 @@
 .timeblockcontainer {
-    border-bottom: 1px solid black;
+    // border-bottom: 1px solid black;
 }
 
 .dropContainer {
+    overflow: hidden;
+    border: 2px solid black;
+    margin-top: 10px;
     padding-top: 10px;
     padding-bottom: 5px;
-    width: 100%;
+    border-radius: 5px;
+    box-shadow: black 8px 8px;
+    width: 125px;
+
     &__timeCon {
         // background-color: red;
         width: 200px;
     }
+}
+
+.border{
+    // border: 1px solid black;
+    height: 100%;
 }
 
 

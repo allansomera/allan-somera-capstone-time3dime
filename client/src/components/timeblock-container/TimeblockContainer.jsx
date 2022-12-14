@@ -20,10 +20,12 @@ const TimeblockContainer = ({ droppable_item, getColor }) => {
                     : "lightgrey",
                   // padding: 4,
                   // width: 200,
-                  minHeight: 40,
+                  minHeight: 60,
                 }}
               >
-                <TimeblockItem item={droppable_item} getColor={getColor} />
+                <div className="border">
+                  <TimeblockItem item={droppable_item} getColor={getColor} />
+                </div>
                 {provided.placeholder}
               </div>
               {/* * <div className="dropContainer__timeCon">1</div>
