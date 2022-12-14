@@ -12,12 +12,13 @@ const TimeblockItem = ({ item }) => {
         {(provided, snapshot) => {
           return (
             <div
+              className="container"
               ref={provided.innerRef}
               {...provided.draggableProps}
               {...provided.dragHandleProps}
               style={{
                 userSelect: "none",
-                padding: 16,
+                // padding: 16,
                 margin: "0 0 8px 0",
                 minHeight: "10px",
                 backgroundColor: snapshot.isDragging ? "#000000" : "#456c86",
@@ -25,7 +26,8 @@ const TimeblockItem = ({ item }) => {
                 ...provided.draggableProps.style,
               }}
             >
-              {item.type}
+              <div className="container__leftbar"></div>
+              <div className="container__itemCon">{item.type}</div>
             </div>
           )
         }}
