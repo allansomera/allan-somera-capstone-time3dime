@@ -18,7 +18,7 @@ const TimeblockItem = ({ item, getColor }) => {
               {...provided.dragHandleProps}
               style={{
                 userSelect: "none",
-                width: 80,
+                // width: 80,
                 // padding: 16,
                 // margin: "0 0 8px 0",
                 minHeight: "10px",

@@ -1,10 +1,10 @@
-
 .container {
     display: flex;
+    // justify-content: flex-start;
     border-radius: 5px;
     border: 2px solid black;
     // margin-left: 20px;
-    // width: 200px;
+    width: 100px;
 
     &__leftbar {
         width:8px;
@@ -13,9 +13,10 @@
     }
 
     &__itemCon {
-        display: flex;
-        align-items: center;
-
+        padding-top: 2px;
+        padding-left: 10px;
+        flex: 1;
+        // text-align: center;
     }
 }
 

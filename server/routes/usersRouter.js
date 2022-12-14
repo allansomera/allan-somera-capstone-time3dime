@@ -12,7 +12,7 @@ router.route("/:id/day/new").post(userController.insertNewDay)
 router
   .route("/:id/day/:day_id")
   .get(userController.userDay)
-  .patch(userController.updateDay)
+  .post(userController.updateDay)
 
 router.route("/:id/tags").get(userController.userTags)
 

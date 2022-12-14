@@ -10,6 +10,7 @@ const TimeblockContainer = ({ droppable_item, getColor }) => {
         {(provided, snapshot) => {
           return (
             <>
+              <div className="time_label">{droppable_item.timeslot}</div>
               <div
                 className="dropContainer"
                 {...provided.droppableProps}
@@ -23,13 +24,9 @@ const TimeblockContainer = ({ droppable_item, getColor }) => {
                   minHeight: 60,
                 }}
               >
-                <div className="border">
-                  <TimeblockItem item={droppable_item} getColor={getColor} />
-                </div>
+                <TimeblockItem item={droppable_item} getColor={getColor} />
                 {provided.placeholder}
               </div>
-              {/* * <div className="dropContainer__timeCon">1</div>
-               */}
             </>
           )
         }}

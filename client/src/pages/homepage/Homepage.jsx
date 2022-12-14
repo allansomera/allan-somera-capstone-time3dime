@@ -23,7 +23,7 @@ const tagColors = {
   free: "#ff00ff",
   sleep: "#fb2600",
   school: "#6600ff",
-  eat: "#976775",
+  eat: "#fbc800",
   code: "#463848",
 }
 
@@ -162,7 +162,7 @@ const Homepage = () => {
 
   const btn_handler = async () => {
     const payload = { day_data: timeblocks }
-    const res = await axios.patch(`${URL}/users/${id}/day/${day_id}`, payload)
+    const res = await axios.post(`${URL}/users/${id}/day/${day_id}`, payload)
     console.log(res)
   }
 
@@ -189,6 +189,11 @@ const Homepage = () => {
         }
       >
         <div className="homepage">
+          <div className="project_name">
+            <div className="capstone">Time</div>
+            <div className="capstone">Triple</div>
+            <div className="capstone">Dime</div>
+          </div>
           <div className="testcolumn">
             <div className="datepicker">
               <DateComp />
@@ -250,14 +255,15 @@ const Homepage = () => {
                     {(provided, snapshot) => {
                       return (
                         <div
+                          className="tag__column"
                           {...provided.droppableProps}
                           ref={provided.innerRef}
                           style={{
                             background: snapshot.isDraggingOver
                               ? "lightblue"
                               : "lightgrey",
-                            padding: 4,
-                            width: 200,
+                            // padding: 20,
+                            // width: 150,
                             minHeight: 50,
                           }}
                         >
@@ -271,18 +277,21 @@ const Homepage = () => {
                                 {(provided, snapshot) => {
                                   return (
                                     <div
+                                      className="tag__type"
                                       ref={provided.innerRef}
                                       {...provided.draggableProps}
                                       {...provided.dragHandleProps}
                                       style={{
                                         userSelect: "none",
                                         padding: 16,
-                                        margin: "0 0 8px 0",
+                                        margin: "0 0 20px 0",
                                         minHeight: "30px",
                                         backgroundColor: snapshot.isDragging
                                           ? "#000000"
                                           : getColor(item.type),
-                                        color: "white",
+                                        color: snapshot.isDragging
+                                          ? "white"
+                                          : "white",
                                         ...provided.draggableProps.style,
                                       }}
                                     >
