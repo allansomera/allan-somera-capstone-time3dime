@@ -292,7 +292,11 @@ const Homepage = () => {
                                           ? "#000000"
                                           : getColor(item.type),
                                         color: snapshot.isDragging
-                                          ? "white"
+                                          ? item.type === "eat"
+                                            ? "white"
+                                            : "white"
+                                          : item.type === "eat"
+                                          ? "black"
                                           : "white",
                                         ...provided.draggableProps.style,
                                       }}
@@ -313,6 +317,7 @@ const Homepage = () => {
               )
             })}
           </div>
+          <div className="chart"></div>
         </div>
       </DragDropContext>
     </>
