@@ -18,6 +18,19 @@ import DateComp from "@/components/date-comp/DateComp"
 //   { id: uuidv4(), name: "free" },
 // ]
 
+const tagColors = {
+  gym: "#0000ff",
+  free: "#ff00ff",
+  sleep: "#ffff00",
+  school: "#6600ff",
+  eat: "#976775",
+  code: "#463848",
+}
+
+const getColor = (type) => {
+  return tagColors[type]
+}
+
 const URL = "http://localhost:8080"
 // const u_id = "2922c286-16cd-4d43-ab98-c79f698aeab0"
 
@@ -187,25 +200,45 @@ const Homepage = () => {
           <div className="column1">
             column1
             {timeblocks.slice(0, 12).map((droppable_item) => {
-              return <TimeblockContainer droppable_item={droppable_item} />
+              return (
+                <TimeblockContainer
+                  droppable_item={droppable_item}
+                  getColor={getColor}
+                />
+              )
             })}
           </div>
           <div className="column2">
             column2
             {timeblocks.slice(12, 24).map((droppable_item) => {
-              return <TimeblockContainer droppable_item={droppable_item} />
+              return (
+                <TimeblockContainer
+                  droppable_item={droppable_item}
+                  getColor={getColor}
+                />
+              )
             })}
           </div>
           <div className="column3">
             column3
             {timeblocks.slice(24, 36).map((droppable_item) => {
-              return <TimeblockContainer droppable_item={droppable_item} />
+              return (
+                <TimeblockContainer
+                  droppable_item={droppable_item}
+                  getColor={getColor}
+                />
+              )
             })}
           </div>
           <div className="column4">
             column4
             {timeblocks.slice(36, 48).map((droppable_item) => {
-              return <TimeblockContainer droppable_item={droppable_item} />
+              return (
+                <TimeblockContainer
+                  droppable_item={droppable_item}
+                  getColor={getColor}
+                />
+              )
             })}
           </div>
           <div className="column5">
@@ -248,7 +281,7 @@ const Homepage = () => {
                                         minHeight: "30px",
                                         backgroundColor: snapshot.isDragging
                                           ? "#000000"
-                                          : "#456c86",
+                                          : getColor(item.type),
                                         color: "white",
                                         ...provided.draggableProps.style,
                                       }}
