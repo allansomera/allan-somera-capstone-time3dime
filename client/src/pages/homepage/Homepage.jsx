@@ -190,9 +190,9 @@ const Homepage = () => {
       >
         <div className="homepage">
           <div className="project_name">
-            <div className="capstone">Time</div>
-            <div className="capstone">Triple</div>
-            <div className="capstone">Dime</div>
+            <div className="capstone">Time__</div>
+            <div className="capstone2">_Triple</div>
+            <div className="capstone">Dime__</div>
           </div>
           <div className="testcolumn">
             <div className="datepicker">
@@ -203,7 +203,7 @@ const Homepage = () => {
             </div>
           </div>
           <div className="column1">
-            column1
+            00:00 -- 05:30
             {timeblocks.slice(0, 12).map((droppable_item) => {
               return (
                 <TimeblockContainer
@@ -214,7 +214,7 @@ const Homepage = () => {
             })}
           </div>
           <div className="column2">
-            column2
+            06:00 -- 11:30
             {timeblocks.slice(12, 24).map((droppable_item) => {
               return (
                 <TimeblockContainer
@@ -225,7 +225,7 @@ const Homepage = () => {
             })}
           </div>
           <div className="column3">
-            column3
+            12:00 -- 17:30
             {timeblocks.slice(24, 36).map((droppable_item) => {
               return (
                 <TimeblockContainer
@@ -236,7 +236,7 @@ const Homepage = () => {
             })}
           </div>
           <div className="column4">
-            column4
+            18:00 -- 23:30
             {timeblocks.slice(36, 48).map((droppable_item) => {
               return (
                 <TimeblockContainer
@@ -250,7 +250,9 @@ const Homepage = () => {
             {Object.entries(tagSlot).map(([id, slot]) => {
               return (
                 <div className="timeslot" key={id}>
-                  <h2>{slot.slot}</h2>
+                  <div className="tagcolumn-title">
+                    {"__" + slot.slot + "-_"}
+                  </div>
                   <Droppable key={id} droppableId={id}>
                     {(provided, snapshot) => {
                       return (

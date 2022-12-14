@@ -12,23 +12,39 @@
     display: flex;
     flex-direction: column;
     margin-right: 16px;
+    text-align: center;
 }
 
 .column5{
     margin-left: 20px;
 }
 
+.timeslot{
+    display: flex;
+    margin-top: 75px;
+}
+.tagcolumn-title{
+    color: black;
+    padding: 0;
+    font-size: 125px;
+    order:2;
+    margin-left: 20px;
+    writing-mode: vertical-lr;
+    // transform: scale(-1,-1);
+    font-weight: 600;
+    padding-top: 40px;
+}
+
+
 body {
     background-color: #34985B;
     // background-color: #9cca8c;
 }
 
-h2 {
-    color: white;
-}
 .testcolumn{
     display: flex;
     flex-direction: column;
+    margin-left: 200px;
 }
 
 .tag {
@@ -61,21 +77,73 @@ h2 {
     top: 80px;
     width: 200px;
     height: 300px;
-    perspective: 500px;
+    perspective: 200px;
     animation: slideInFromTop 1s ease-out;
 }
 
 .capstone {
-    font-size: 200px;
+    color: white;
+    font-size: 225px;
     font-weight: 500;
-    line-height: 200px;
+    line-height: 225px;
     text-align: left;
     transform-origin: left;
-    transform: rotateY(30deg);
+    transform: rotateY(15deg);
     transition-duration: .4s;
     &:hover{
         color: transparent;
         cursor: pointer;
-        transform: rotateY(10deg) translateZ(0) scale(1.1);
+        transform: rotateY(9deg) translateZ(0) scale(1.1);
+        -webkit-text-stroke-width: 2px;
+        -webkit-text-stroke-color: black;
+        &::first-letter{
+            color: transparent;
+        }
+    }
+    // &:hover::before{
+    //     content: "gh_";
+    // }
+    &::first-letter{
+        color: black;
+    }
+    
+
+}
+
+.capstone2{
+    color: transparent;
+    font-size: 225px;
+    font-weight: 500;
+    line-height: 225px;
+    text-align: left;
+    transform-origin: left;
+    transform: rotateY(15deg);
+    transition-duration: .4s;
+    -webkit-text-stroke-width: 2px;
+    -webkit-text-stroke-color: black;
+
+    &:hover{
+        color: white;
+        cursor: pointer;
+        transform: rotateY(9deg) translateZ(0) scale(1.1);
+        &::first-letter{
+            color: black;
+        }
+    }
+    &::first-letter{
+        color: transparent;
     }
 }
+
+@keyframes slideInFromTop {
+    0%{
+        -webkit-backface-visibility: hidden;
+        -webkit-transform: translateY(-100%) scale(.5, 1.5);
+        opacity: 0.5;
+    }100%{
+        -webkit-backface-visibility: hidden;
+        -webkit-transform: translateY(0) scale(1, 1);
+        opacity: 1;
+    }
+}
+

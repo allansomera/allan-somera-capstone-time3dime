@@ -5,6 +5,7 @@
     border: 2px solid black;
     // margin-left: 20px;
     width: 100px;
+    
 
     &__leftbar {
         width:8px;
@@ -13,6 +14,7 @@
     }
 
     &__itemCon {
+        text-align: left;
         padding-top: 2px;
         padding-left: 10px;
         flex: 1;
