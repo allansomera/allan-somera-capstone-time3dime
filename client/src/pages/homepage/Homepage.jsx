@@ -9,6 +9,7 @@ import axios from "axios"
 // import TimeblockContainer from "@/components/TimeblockContainer"
 import TimeblockContainer from "@/components/timeblock-container/TimeblockContainer"
 import DateComp from "@/components/date-comp/DateComp"
+import DonutChart from "@/components/donut-chart/DonutChart"
 
 // const tags = [
 //   { id: uuidv4(), name: "sleep" },
@@ -317,7 +318,13 @@ const Homepage = () => {
               )
             })}
           </div>
-          <div className="chart"></div>
+          <div className="chart">
+            <DonutChart
+              timeblocks={timeblocks}
+              tags={backend_tags.data}
+              getColor={getColor}
+            />
+          </div>
         </div>
       </DragDropContext>
     </>
