@@ -76,7 +76,10 @@ const DonutChart = ({ timeblocks, tags, getColor }) => {
 
   const lightOptions = {
     plugins: {
+      responsive: true,
+      maintainAspectRatio: false,
       legend: {
+        position: "right",
         labels: {
           color: "#ffffff",
           font: {

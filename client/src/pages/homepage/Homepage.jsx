@@ -266,7 +266,8 @@ const Homepage = () => {
                           style={{
                             background: snapshot.isDraggingOver
                               ? "lightblue"
-                              : "lightgrey",
+                              : "#f1433e",
+                            //  : "lightgrey",
                             // padding: 20,
                             // width: 150,
                             minHeight: 50,

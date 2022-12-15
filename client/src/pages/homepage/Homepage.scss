@@ -21,7 +21,7 @@
 
 .timeslot{
     display: flex;
-    margin-top: 75px;
+    margin-top: 32px;
 }
 .tagcolumn-title{
     color: #fbc800;
@@ -93,7 +93,7 @@ body {
         justify-content: center;
         align-items: center;
         border: 2px solid black;
-        box-shadow: white 20px 20px;
+        box-shadow: #1c61c4 20px 20px;
         border-radius: 5px;
         width: 200px;
     }
@@ -149,10 +149,10 @@ body {
 }
 .chart{
     position: absolute;
-    right: 240px;
+    right: 170px;
     bottom: 75px;
-    width: 300px;
-    height: 300px;
+    width: 350px;
+    height: 350px;
     // background-color: red;
 }
 
