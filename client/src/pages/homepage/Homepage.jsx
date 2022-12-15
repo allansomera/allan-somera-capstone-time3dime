@@ -199,8 +199,10 @@ const Homepage = () => {
             <div className="datepicker">
               <DateComp />
             </div>
-            <div className="tc_button">
-              <button onClick={() => btn_handler()}>SAVE</button>
+            <div className="tc_buttoncon">
+              <button className="tc_button" onClick={() => btn_handler()}>
+                SAVE
+              </button>
             </div>
           </div>
           <div className="column1">
