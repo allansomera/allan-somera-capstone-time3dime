@@ -83,7 +83,7 @@ const DonutChart = ({ timeblocks, tags, getColor }) => {
         labels: {
           color: "#ffffff",
           font: {
-            size: 15,
+            size: 24,
           },
         },
       },
