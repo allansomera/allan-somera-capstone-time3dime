@@ -5,6 +5,8 @@ import { useParams } from "react-router-dom"
 import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd"
 import { v4 as uuidv4 } from "uuid"
 import axios from "axios"
+import { toast } from "react-toastify"
+import "react-toastify/dist/ReactToastify.css"
 
 // import TimeblockContainer from "@/components/TimeblockContainer"
 import TimeblockContainer from "@/components/timeblock-container/TimeblockContainer"
@@ -161,10 +163,44 @@ const Homepage = () => {
     getTimeblocks()
   }, [params])
 
-  const btn_handler = async () => {
+  const btn_handler = () => {
     const payload = { day_data: timeblocks }
-    const res = await axios.post(`${URL}/users/${id}/day/${day_id}`, payload)
-    console.log(res)
+    // const id = toast.loading("SAVING...")
+
+    toast.promise(axios.post(`${URL}/users/${id}/day/${day_id}`, payload), {
+      pending: {
+        render() {
+          return "SAVING.."
+        },
+        icon: false,
+        position: "top-left",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      },
+      success: {
+        render() {
+          return "SAVED!"
+        },
+        // other options
+        icon: false,
+        position: "top-left",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      },
+    })
+    //toast here
+    // toast
+    // console.log(res)
   }
 
   // console.log(slots)

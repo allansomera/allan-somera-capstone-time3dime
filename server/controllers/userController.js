@@ -63,9 +63,11 @@ exports.userDay = (req, res) => {
 
 exports.updateDay = (req, res) => {
   const { id, day_id } = req.params
-  req.body.day_data.forEach((i) => {
+
+  const promises = []
+  const grabTag_promise = (i) => {
     const { fk_tag_id, type, fk_timeblock_id } = i
-    return knex("tags")
+    let k_res = knex("tags")
       .where("tags.type", "=", type)
       .pluck("tag_id")
       .then((tag) => {
@@ -78,8 +80,36 @@ exports.updateDay = (req, res) => {
           )
         )
       })
+    promises.push(k_res)
+  }
+
+  req.body.day_data.forEach((i) => {
+    grabTag_promise(i)
+  })
+
+  Promise.all(promises).then((data) => {
+    res.status(200).json(data)
   })
 }
+// exports.updateDay = (req, res) => {
+//   const { id, day_id } = req.params
+//   req.body.day_data.forEach((i) => {
+//     const { fk_tag_id, type, fk_timeblock_id } = i
+//     return knex("tags")
+//       .where("tags.type", "=", type)
+//       .pluck("tag_id")
+//       .then((tag) => {
+//         return Promise.all(
+//           tag.map((tag_id) =>
+//             knex("dayByTimeblock")
+//               .where("fk_day_id", "=", day_id)
+//               .andWhere("fk_timeblock_id", "=", fk_timeblock_id)
+//               .update({ fk_tag_id: parseInt(tag_id.toString()) })
+//           )
+//         )
+//       })
+//   })
+// }
 
 exports.userTags = (req, res) => {
   const { id } = req.params
