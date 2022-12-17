@@ -21,7 +21,7 @@
 
 .timeslot{
     display: flex;
-    margin-top: 75px;
+    margin-top: 32px;
 }
 .tagcolumn-title{
     color: #fbc800;
@@ -42,10 +42,49 @@ body {
 }
 
 .testcolumn{
+
+    margin-top: 30px;
     display: flex;
     flex-direction: column;
-    margin-left: 200px;
+    margin-left: 248px;
 }
+
+.tc_button{
+    margin-top: 16px;
+    margin-right: 24px;
+    background-color: transparent;
+    border: 2px solid black;
+    border-radius: 5px;
+    box-shadow: 8px 8px yellow;
+    // box-shadow: 8px 8px yellow, 8px 8px 0px 1px black;
+    width: 175px;
+    height: 40px;
+    font-weight: 600;
+    text-transform: uppercase;
+
+    &:hover {
+        background-color: #a66efe;
+        box-shadow: 8px 8px #fbf4a0;
+        transition-duration: 0.4s;
+        animation: pulse .75s;
+    }
+
+    @keyframes pulse {
+      0% {
+        transform: scale(.85);
+      }
+      70% {
+        transform: scale(1);
+        box-shadow: 0 0 0 30px rgba(#a66efe, 0);
+      }
+        100% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(#a66efe, 0);
+      }
+    }
+
+}
+
 
 .tag {
     &__column {
@@ -55,7 +94,7 @@ body {
         justify-content: center;
         align-items: center;
         border: 2px solid black;
-        box-shadow: white 20px 20px;
+        box-shadow: #1c61c4 20px 20px;
         border-radius: 5px;
         width: 200px;
     }
@@ -82,6 +121,7 @@ body {
 }
 
 .capstone {
+    padding-left: 36px;
     color: white;
     font-size: 225px;
     font-weight: 500;
@@ -111,14 +151,15 @@ body {
 }
 .chart{
     position: absolute;
-    right: 240px;
+    right: 140px;
     bottom: 75px;
-    width: 300px;
-    height: 300px;
+    width: 350px;
+    height: 350px;
     // background-color: red;
 }
 
 .capstone2{
+    padding-left: 36px;
     color: transparent;
     font-size: 225px;
     font-weight: 500;

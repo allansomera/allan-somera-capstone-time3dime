@@ -74,15 +74,21 @@ const DonutChart = ({ timeblocks, tags, getColor }) => {
 
   // let [chartData, setChartdata] = useState(data)
 
-  // const [lightOptions] = useState({
-  //   plugins: {
-  //     legend: {
-  //       labels: {
-  //         color: "#495057",
-  //       },
-  //     },
-  //   },
-  // })
+  const lightOptions = {
+    plugins: {
+      responsive: true,
+      maintainAspectRatio: false,
+      legend: {
+        position: "right",
+        labels: {
+          color: "#ffffff",
+          font: {
+            size: 24,
+          },
+        },
+      },
+    },
+  }
 
   // useEffect(() => {
   //   setChartdata = {
@@ -99,7 +105,7 @@ const DonutChart = ({ timeblocks, tags, getColor }) => {
 
   return (
     <>
-      <Doughnut data={data} />
+      <Doughnut data={data} options={lightOptions} />
     </>
   )
 }
