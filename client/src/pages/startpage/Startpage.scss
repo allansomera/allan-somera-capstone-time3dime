@@ -1,0 +1,57 @@
+@use '../../main.scss';
+
+.startpage {
+    // position: absolute;
+    // right: 0;
+    // top: 80px;
+    margin-right: 50px;
+    margin-top: 50px;
+    perspective: 800px;
+    // animation: slideInFromTop 1s ease-out;
+}
+
+.links {
+    font-family: "Druk Wide Web Bold";
+    color: black;
+    font-size: 130px;
+    font-weight: bold;
+    line-height: 145px;
+    text-align: right;
+    text-transform: uppercase;
+    transform-origin: right;
+    transform: rotateY(-22deg);
+    transition-duration: .5s;
+
+    &:hover{
+        color: transparent;
+        cursor: pointer;
+        transform: rotateY(-15deg) translateZ(0) scale(1.22);
+        -webkit-text-stroke-width: 2px;
+        -webkit-text-stroke-color: black;
+    }
+}
+
+.logo{
+    display: flex;
+    color: white;
+    flex-direction: column;
+    position: fixed;
+    bottom: 150px;
+    left: 65px;
+    transition-duration: .4s;
+    &__name{
+        font-family: "Druk Wide Web Bold";
+        font-size: 30px;
+    }
+    &:hover{
+        color: transparent;
+        -webkit-text-stroke-width: 1px;
+        -webkit-text-stroke-color: white;
+    }
+}
+
+
+a {
+  color: inherit; /* blue colors for links too */
+  text-decoration: inherit; /* no underline */
+}

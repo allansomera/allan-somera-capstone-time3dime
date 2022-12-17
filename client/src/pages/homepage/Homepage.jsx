@@ -1,28 +1,37 @@
 import "./Homepage.scss"
 
 import React, { useState, useEffect } from "react"
-import { useNavigate, useParams } from "react-router-dom"
+import { useParams } from "react-router-dom"
 import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd"
 import { v4 as uuidv4 } from "uuid"
 import axios from "axios"
+import { toast } from "react-toastify"
+import "react-toastify/dist/ReactToastify.css"
 
 // import TimeblockContainer from "@/components/TimeblockContainer"
 import TimeblockContainer from "@/components/timeblock-container/TimeblockContainer"
 import DateComp from "@/components/date-comp/DateComp"
+import DonutChart from "@/components/donut-chart/DonutChart"
 
-const tags = [
-  { id: uuidv4(), name: "sleep" },
-  { id: uuidv4(), name: "work" },
-  { id: uuidv4(), name: "gym" },
-  { id: uuidv4(), name: "eat" },
-  { id: uuidv4(), name: "free" },
-]
+// const tags = [
+//   { id: uuidv4(), name: "sleep" },
+//   { id: uuidv4(), name: "work" },
+//   { id: uuidv4(), name: "gym" },
+//   { id: uuidv4(), name: "eat" },
+//   { id: uuidv4(), name: "free" },
+// ]
 
-const tagSlot = {
-  [uuidv4()]: {
-    slot: "tags",
-    tags: tags,
-  },
+const tagColors = {
+  gym: "#0000ff",
+  free: "#ff00ff",
+  sleep: "#fb2600",
+  school: "#6600ff",
+  eat: "#fbc800",
+  code: "#463848",
+}
+
+const getColor = (type) => {
+  return tagColors[type]
 }
 
 const URL = "http://localhost:8080"
@@ -44,9 +53,9 @@ const onDragEnd = (
   if (!result.destination) return
   // console.log("slots", slots)
   const { source, destination } = result
-  // console.log("result", result)
-  // console.log("source", source)
-  // console.log("destination", destination)
+  console.log("result", result)
+  console.log("source", source)
+  console.log("destination", destination)
   let sourceColumn = {}
   let destColumn = {}
   if (source.droppableId !== destination.droppableId) {
@@ -61,7 +70,7 @@ const onDragEnd = (
       const [removed] = sourceItems.splice(source.index, 1)
       const destColumn_copy = {
         ...destColumn,
-        type: removed.name,
+        type: removed.type,
       }
       const new_timeblocks = [...timeblocks]
       new_timeblocks[destTarget_idx] = destColumn_copy
@@ -70,6 +79,7 @@ const onDragEnd = (
     } else {
       sourceColumn = getObject(timeblocks, source.droppableId)[0]
       destColumn = getObject(timeblocks, destination.droppableId)[0]
+
       // find source index
       const sourceTarget_idx = timeblocks.findIndex(
         (o) => o.day_timeblock_id === source.droppableId
@@ -114,37 +124,94 @@ const onDragEnd = (
   }
 }
 
+const backend_tags = await axios.get(`${URL}/users/1/tags`)
+
+const tagSlot = {
+  [uuidv4()]: {
+    slot: "tags",
+    tags: backend_tags.data,
+  },
+}
+
 const Homepage = () => {
-  const nav = useNavigate()
-  // nav(`/users/${u_id}`)
+  const { id, day_id } = useParams()
+  const params = useParams()
 
-  const { id } = useParams()
-
-  const [tagsColumn, setTagsColumn] = useState(tagSlot)
   const [timeblocks, setTimeblocks] = useState([])
+  // const [usertags, setUserTags] = useState([])
+  const [tagsColumn, setTagsColumn] = useState(tagSlot)
 
-  const btn_handler = async () => {
+  useEffect(() => {
+    const getTimeblocks = async () => {
+      const { data } = await axios.get(`${URL}/users/${id}/day/${day_id}`)
+      // console.log("data", data)
+      // if (!data) console.log(`no data for user ${id} for ${day_id} `)
+      setTimeblocks(data)
+      // setUserTags(tags.data)
+    }
+    getTimeblocks()
+  }, [])
+
+  useEffect(() => {
+    const getTimeblocks = async () => {
+      const { data } = await axios.get(`${URL}/users/${id}/day/${day_id}`)
+      // console.log("data", data)
+      // if (!data) console.log(`no data for user ${id} for ${day_id} `)
+      setTimeblocks(data)
+      // setUserTags(tags.data)
+    }
+    getTimeblocks()
+  }, [params])
+
+  const btn_handler = () => {
     const payload = { day_data: timeblocks }
-    const res = await axios.patch(`${URL}/users/${id}/day/2`, payload)
-    console.log(res)
+    // const id = toast.loading("SAVING...")
+
+    toast.promise(axios.post(`${URL}/users/${id}/day/${day_id}`, payload), {
+      pending: {
+        render() {
+          return "SAVING.."
+        },
+        icon: false,
+        position: "top-left",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      },
+      success: {
+        render() {
+          return "SAVED!"
+        },
+        // other options
+        icon: false,
+        position: "top-left",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      },
+    })
+    //toast here
+    // toast
+    // console.log(res)
   }
 
   // console.log(slots)
   // console.log(Object.entries(slots))
   // onDragEnd={(result) => onDragEnd(result, slots, setSlots)}
+
   // useEffect(() => {
   //   // console.log("current state of slots", slots)
   //   console.log("current state of timeblock", timeblocks)
-  // }, [slots, timeblocks])
-
-  useEffect(() => {
-    const getTimeblocks = async () => {
-      const { data } = await axios.get(`${URL}/users/${id}/day/2`)
-      setTimeblocks(data)
-    }
-    getTimeblocks()
-  }, [])
-
+  //   console.log("current state of usertags", usertags)
+  // }, [usertags, timeblocks])
   return (
     <>
       <DragDropContext
@@ -159,65 +226,122 @@ const Homepage = () => {
         }
       >
         <div className="homepage">
+          <div className="project_name">
+            <div className="capstone">Time__</div>
+            <div className="capstone2">_Triple</div>
+            <div className="capstone">Dime__</div>
+          </div>
           <div className="testcolumn">
             <div className="datepicker">
               <DateComp />
             </div>
-            <div className="tc_button">
-              <button onClick={() => btn_handler()}>SAVE</button>
+            <div className="tc_buttoncon">
+              <button className="tc_button" onClick={() => btn_handler()}>
+                SAVE
+              </button>
             </div>
           </div>
           <div className="column1">
-            {timeblocks.map((droppable_item) => {
-              return <TimeblockContainer droppable_item={droppable_item} />
+            00:00 -- 05:30
+            {timeblocks.slice(0, 12).map((droppable_item) => {
+              return (
+                <TimeblockContainer
+                  droppable_item={droppable_item}
+                  getColor={getColor}
+                />
+              )
             })}
           </div>
           <div className="column2">
+            06:00 -- 11:30
+            {timeblocks.slice(12, 24).map((droppable_item) => {
+              return (
+                <TimeblockContainer
+                  droppable_item={droppable_item}
+                  getColor={getColor}
+                />
+              )
+            })}
+          </div>
+          <div className="column3">
+            12:00 -- 17:30
+            {timeblocks.slice(24, 36).map((droppable_item) => {
+              return (
+                <TimeblockContainer
+                  droppable_item={droppable_item}
+                  getColor={getColor}
+                />
+              )
+            })}
+          </div>
+          <div className="column4">
+            18:00 -- 23:30
+            {timeblocks.slice(36, 48).map((droppable_item) => {
+              return (
+                <TimeblockContainer
+                  droppable_item={droppable_item}
+                  getColor={getColor}
+                />
+              )
+            })}
+          </div>
+          <div className="column5">
             {Object.entries(tagSlot).map(([id, slot]) => {
               return (
                 <div className="timeslot" key={id}>
-                  <h2>{slot.slot}</h2>
+                  <div className="tagcolumn-title">
+                    {"__" + slot.slot + "-_"}
+                  </div>
                   <Droppable key={id} droppableId={id}>
                     {(provided, snapshot) => {
                       return (
                         <div
+                          className="tag__column"
                           {...provided.droppableProps}
                           ref={provided.innerRef}
                           style={{
                             background: snapshot.isDraggingOver
                               ? "lightblue"
-                              : "lightgrey",
-                            padding: 4,
-                            width: 200,
+                              : "#f1433e",
+                            //  : "lightgrey",
+                            // padding: 20,
+                            // width: 150,
                             minHeight: 50,
                           }}
                         >
                           {slot.tags.map((item, index) => {
                             return (
                               <Draggable
-                                key={item.id}
-                                draggableId={item.id}
+                                key={item.usertag_id}
+                                draggableId={String(item.usertag_id)}
                                 index={index}
                               >
                                 {(provided, snapshot) => {
                                   return (
                                     <div
+                                      className="tag__type"
                                       ref={provided.innerRef}
                                       {...provided.draggableProps}
                                       {...provided.dragHandleProps}
                                       style={{
                                         userSelect: "none",
                                         padding: 16,
-                                        margin: "0 0 8px 0",
+                                        margin: "0 0 20px 0",
                                         minHeight: "30px",
                                         backgroundColor: snapshot.isDragging
                                           ? "#000000"
-                                          : "#456c86",
-                                        color: "white",
+                                          : getColor(item.type),
+                                        color: snapshot.isDragging
+                                          ? item.type === "eat"
+                                            ? "white"
+                                            : "white"
+                                          : item.type === "eat"
+                                          ? "black"
+                                          : "white",
                                         ...provided.draggableProps.style,
                                       }}
                                     >
-                                      {item.name}
+                                      {item.type}
                                     </div>
                                   )
                                 }}
@@ -232,6 +356,13 @@ const Homepage = () => {
                 </div>
               )
             })}
+          </div>
+          <div className="chart">
+            <DonutChart
+              timeblocks={timeblocks}
+              tags={backend_tags.data}
+              getColor={getColor}
+            />
           </div>
         </div>
       </DragDropContext>
