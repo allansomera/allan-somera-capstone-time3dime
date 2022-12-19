@@ -133,27 +133,37 @@ To get a local copy up and running follow these simple steps.
 
 ### Installation
 
+#### Setting up the BACKEND server
+
 1. Clone the repo
 
    ```sh
-   git clone git@github.com:allansomera/allan-somera-brainflix.git
+   git clone git@github.com:allansomera/allan-somera-capstone-time3dime.git
    ```
 
 2. Enter the directory
 
    ```sh
-   cd allan-somera-brainflix
+   cd allan-somera-capstone-time3dime
    ```
 
      <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-3. install all the npm packages
+3. go into the 'server' directory
    ```sh
-   npm install
+   cd server
    ```
-4. Launch the site
+4. rename '.env.sample' to '.env'
    ```sh
-   npm start
+   mv ./.env.sample .env
+   ```
+5. install all the packages
+   ```sh
+   npm i
+   ```
+6. Run all migrations and seeds
+   ```sh
+   npm run setup
    ```
 
  <p align="right">(<a href="#readme-top">back to top</a>)</p>
@@ -322,6 +332,11 @@ Project Link:
 [nodejs-url]: https://nodejs.org/
 [mysql]: https://img.shields.io/badge/MySQL-00000F?style=for-the-badge&logo=mysql&logoColor=white
 [mysql-url]: https://nodejs.org/
+
+$$
+
+
+$$
 
 $$
 $$
