@@ -375,11 +375,6 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 
 <!-- CONTACT -->
 
-## Contact
-
-Project Link:
-[https://github.com/allansomera/allan-somera-bandsite](https://github.com/allansomera/allan-somera-bandsite)
-
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- MARKDOWN LINKS & IMAGES -->
