@@ -48,6 +48,14 @@
       <a href="#getting-started">Getting Started</a>
       <ul>
         <li><a href="#installation">Installation</a></li>
+      <ul>
+        <li><a href="#prequisites">Prequisites</a></li>
+        <li><a href="#setting-up-the-backend-server">Setting up the BACKEND
+        server</a></li>
+        <li><a href="#setting-up-the-frontend">Setting up the FRONTEND</a></li>
+        <li><a href="#running-both-client-server">Running both client and
+        server</a></li>
+      </ul>
       </ul>
     </li>
     <li>
@@ -133,6 +141,30 @@ To get a local copy up and running follow these simple steps.
 
 ### Installation
 
+#### Prequisites
+
+Have mySQL installed with a default connection with user 'root' and password 'rootroot'
+
+<a href="https://dev.mysql.com/doc/workbench/en/wb-installing-windows.html">
+install mySQL workbench(Windows)
+</a>
+<br/>
+<a href="https://dev.mysql.com/doc/workbench/en/wb-installing-linux.html">
+install mySQL (Linux)
+</a>
+<br/>
+<a href="https://dev.mysql.com/doc/workbench/en/wb-installing-mac.html">
+install mySQL workbench(MacOS)
+</a>
+<br/>
+<br/>
+
+Make sure to create a database/schema called:
+
+```sh
+"Time3Dime_DB"
+```
+
 #### Setting up the BACKEND server
 
 1. Clone the repo
@@ -146,8 +178,6 @@ To get a local copy up and running follow these simple steps.
    ```sh
    cd allan-somera-capstone-time3dime
    ```
-
-     <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 3. go into the 'server' directory
    ```sh
@@ -166,8 +196,28 @@ To get a local copy up and running follow these simple steps.
    npm run setup
    ```
 
- <p align="right">(<a href="#readme-top">back to top</a>)</p>
-  <!-- LICENSE -->
+#### Setting up the FRONTEND
+
+1. go into the 'client' directory
+   ```sh
+   cd client
+   ```
+2. install all the packages
+   ```sh
+   npm i
+   ```
+
+#### Running both client and server
+
+1. go into the 'server' directory
+   ```sh
+   cd server
+   ```
+2. run the start script
+   ```sh
+   npm run start
+   ```
+   <!-- LICENSE -->
 
 ## Site Structure
 
