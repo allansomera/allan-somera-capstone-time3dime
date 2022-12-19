@@ -19,7 +19,6 @@
 *** https://www.markdownguide.org/basic-syntax/#reference-style-links
 -->
 
-[![MIT License][license-shield]][license-url]
 [![LinkedIn][linkedin-shield]][linkedin-url]
 
 <!-- PROJECT LOGO -->
@@ -50,29 +49,50 @@
         <li><a href="#installation">Installation</a></li>
       <ul>
         <li><a href="#prequisites">Prequisites</a></li>
+        <li><a href="#clone-the-project">Clone the project</a></li>
         <li><a href="#setting-up-the-backend-server">Setting up the BACKEND
         server</a></li>
-        <li><a href="#setting-up-the-frontend">Setting up the FRONTEND</a></li>
+        <li><a href="#setting-up-the-frontend">Setting up the FRONTEND client</a></li>
         <li><a href="#running-both-client-server">Running both client and
         server</a></li>
       </ul>
       </ul>
     </li>
     <li>
+      <a href="#site-structure">Site Structure</a>
+    </li>
+    <li>
       <a href="#show-case">Show Case</a>
       <ul>
-        <li><a href="#functionality">Functionality</a></li>
-        <li><a href="#diving-deeper">Diving Deeper</a></li>
+        <li>
+          <a href="#functionality">Functionality</a>
+          <ul>
+            <li><a href="#drag-and-drop-from-tags-column">Drag and drop from
+            tags column</a></li>
+            <li><a href="#changing-date-from-the-date-picker">Changing date
+            from the date picker </a></li>
+            <li><a href="#donut-chart">Donut chart</a></li>
+            <li><a href="#save-function">Save function</a></li>
+          </ul>
+        </li>
       </ul>
     </li>
     <li>
-      <a href="#site-structure">Site Structure</a>
+      <a href="#lessons-learned">Lessons Learned</a>
       <ul>
-        <li><a href="#component-containers">Component Containers</a></li>
+        <li><a href="#design-frontend">Design (FRONTEND)</a></li>
+        <li><a href="#design-backend">Design (BACKEND)</a></li>
       </ul>
     </li>
-    <li><a href="#license">License</a></li>
+    <li>
+      <a href="#next-steps">Next Steps</a>
+      <ul>
+        <li><a href="#features">Features</a></li>
+        <li><a href="#bug-fixes">Bug Fixes</a></li>
+      </ul>
+    </li>
     <li><a href="#contact">Contact</a></li>
+
   </ol>
 </details>
 
@@ -80,38 +100,37 @@
 
 ## About The Project
 
-This is my Capstone Project for the BrainStation web development sep-dec
+This is my Capstone Project for the BrainStation web development Sep-Dec
 2022 cohort.
 
+It is an app that visually clusters 30min blocks of a given day.
+
+I chose this project because I am an avid time tracker. This was the perfect
+chance to test what I have learned in the bootcamp as well as test how creative
+I can be when designing the visuals of the app.
+
+The app core functionality is to track how a user consumes a 30min block (48 of
+these in a whole day) and visually presents it to the user.
+
+A user can have a list of tags (a tag is an absolute activity description that can be
+resused), and each tag can be dragged to the appropriate time slot.
+
+Everytime a tag is dragged to a timeslot, the donut chart on the bottom right
+gets populated dynamically. The donut chart legends description are also rendered
+dynamically, if 3 tags are used, then the donut chart will only have 3 tags
+visually represented.
+
+Overall this project has challenged me greatly. I had to learn how to style my
+components that fits the "neo brutalism" style. I also had to learn and deeply
+research how to manipulate data in the database using SQL queries.
+
+Enjoy the usage of my app as much as I had fun developing it.
+
 Please look into the <a href="#show-case">Show Case</a> section for more
-explanations on what I implemented on this sprint.
+explanations on what I implemented on this project.
 
 NOTE (to the TAs)
-I've written a section for how I used component containers for my <a
-href="#site-structure">Site Structure</a>, please quickly read this section to
-understand how I setup my components.
-
-NOTE (to the TAs):
-I've tried to follow the style guide, but some parts seemed to be
-impossible to replicate without deviating from the style guide. I did try
-to get the website to be as close to the mockup to the best of my abilities
-without compromising the functionality of the site.
-
-I've also use git command line to merge to main with the command below:
-
-```sh
-git checkout main
-```
-
-```sh
-git merge dev --no-ff
-
-```
-
-```sh
-git push origin main
-
-```
+Explanations of the functionality of my app can be seen at the <a href="#site-structure">Site Structure</a> section.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -165,33 +184,39 @@ Make sure to create a database/schema called:
 "Time3Dime_DB"
 ```
 
-#### Setting up the BACKEND server
+<a
+href="https://stackoverflow.com/questions/5515745/create-a-new-database-with-mysql-workbench#:~:text=Those%20who%20are%20new%20to%20MySQL%20%26%20Mac%20users%3B%20Note%20that%2C%20Connection%20is%20different%20than%20Database.">
+Creating a database/schema</a>
 
-1. Clone the repo
+#### Clone the project
+
+1. Clone the project repo
 
    ```sh
    git clone git@github.com:allansomera/allan-somera-capstone-time3dime.git
    ```
 
-2. Enter the directory
+2. Enter the cloned project directory
 
    ```sh
    cd allan-somera-capstone-time3dime
    ```
 
-3. go into the 'server' directory
+#### Setting up the BACKEND server
+
+1. go into the 'server' directory
    ```sh
    cd server
    ```
-4. rename '.env.sample' to '.env'
+2. rename '.env.sample' to '.env'
    ```sh
    mv ./.env.sample .env
    ```
-5. install all the packages
+3. install all the packages
    ```sh
    npm i
    ```
-6. Run all migrations and seeds
+4. Run all migrations and seeds
    ```sh
    npm run setup
    ```
@@ -221,120 +246,126 @@ Make sure to create a database/schema called:
 
 ## Site Structure
 
-```sh
-The will explain how I used containers to hold each component,
-main reason I did this is basically only for styling.
-```
-
-### Component Containers
+I would classify this as a single page app.
+The landing route when the app is first mounted is:
 
 ```sh
-App -- this will hold the routes for the site
+"http://localhost:5173/user/1/day/1"
 ```
 
-```sh
-TopCon -- this will hold the header component
-    - <Header />
-```
+I have designed my app where in the future, it can used by many users after
+they have signed up for an account.
 
-```sh
-Mid1Con -- this will hold the Hero (main) video component
-    - <Hero />
-        - <HeroVideo />
-```
-
-```sh
-Mid2Con -- this will hold the Main component which will hold the details of the video
-    - <Main />
-```
-
-```sh
-Mid3Con -- this will hold the CommentForm component
-    - <CommentForm />
-```
-
-```sh
-Mid4Con -- this will hold the CommentData component which hold the CommentList
-    - <CommentData />
-        - <CommentList />
-```
-
-```sh
-BottomCon -- this will hold the next video list, components are VideoData, which holds the VideoList component
-    - <VideoData />
-        - <VideoList />
-```
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+![](./extra/mount.jpg)
 
 ## Show Case
 
 ### Functionality
 
-#### Upload Form Validation
+#### Drag and drop from 'tags' column
 
 ```sh
-Will have toastify notifications for form validation, will pop up for any
-input/textarea field that is empty
+You can choose a 'tag' from the 'tags' column to be dropped in a droppable
+timeslot (00:00 to 23:30).
+
+The color of the draggable tag will turn black with it's dropshadow remaining
+as yellow.
+
+The color of the droppable timeslot will change when a draggable item
+is hovering on top of it.
 ```
 
-![](./extra/upload_validation.gif)
+![](./extra/drag_tag.jpg)
 
-#### Upload Form Validation SUCCESS
+#### Changing date from the date picker
 
 ```sh
-When both input and textarea field is not empty, it will go to Success page.
+You can change the date by clicking on a day from the datepicker. Upon clicking
+on the date it will load the data on that given day.
 
-In the Success page, after a few seconds, you will be redirected to the
-homepage
+If there was no previous data on the selected day, it will load 48 brand new
+timeslots.
+
+If the selected day had previous saved data, it will load that data from the
+database.
 ```
 
-![](./extra/upload_success.gif)
+![](./extra/datepicker.png)
 
-#### 404 Page Not Found
+#### Donut chart
 
 ```sh
-If the url has an invalid route, it will re-route to the 404 page not found,
-and after a few seconds it will re-direct to the homepage
+Everytime a user drags a tag into timeslot, the donut chart gets rendered
+dynamically. Essentially, this donut chart will count how many tags are used
+within the day. The count that is represented on each section represents
+30mins, you need to divide by 2 to get the total hours.
 ```
 
-![](./extra/404pagenotfound.gif)
+![](./extra/donut.jpg)
 
-### Diving Deeper
+#### Save function
 
 ```sh
-This section is for the Diving Deeper implemented functionality
+Upon clicking on the save button, it will save the current day and post the
+data into the database.
 ```
 
-#### Comment posting validation
+![](./extra/save.jpg)
+
+## Lessons Learned
+
+### Design (FRONTEND)
+
+- What I learned from this whole capstone project is that you really do need to
+  have a set design, even it it just a low fidelity wireframe. Having a set goal
+  to how a component should like saves you a lot of time when actually styling it
+  through css. <br/>
+
+- Choose a theme/design and stick to it. Having a set theme makes it easy to
+  design your components.
+
+- Experiment. Once you have a clear goal in mind, now you can be more creative,
+  you are able to style around this goal, and once you experimented how a
+  certain component should look in different ways, you can choose which one
+  will fit the best towards the flow of your site.
+
+### Design (BACKEND)
+
+- Take time how each data will saved into your database.
 
 ```sh
-Will show a notification if the comment input field is empty
+Each represented data entity => new table
+ie:
+user => user table
+tag => tag table
+user having a list tags = userBytag table
+etc...
 ```
 
-![](./extra/comment_validation.gif)
+- take your time building the entity relationship diagram
+- not only I had to learn how to use SQL queries, I also needed to transform them to
+  be executed by knex query builder
+- learned that each knex callback returns a promise, so I had to be
+  mindful when speaking with the database that I don't have a whole bunch of
+  knex promises executed at the same time (this populates your promise queue). It does affect performance when
+  writing data to the approriate table(s)
 
-#### Comment posting
+## Next Steps
 
-```sh
-Will post the comment in place, with the updated API and re-render the comment
-list
-```
+### Features
 
-![](./extra/comment.gif)
+- Implement new account signup
+- Implement habit tracking functionality
+- Implement journal entry per day
+- implement 'add' tag functionality per user
+- implement a more extensive summary page
+- implement the representation of 'hours' in the donut chart
 
-#### Comment deletion
+### Bug Fixes
 
-```sh
-Clicking on the trash icon will have a sub-menu popping up, when 'DELETE' is
-pressed, it will make the delete request on the API
-
-You will have a green notification that the comment has been successfuly deleted
-```
-
-![](./extra/comment_delete.gif)
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+- Rewrite save functionality, having a null value on a timeslot is not handled
+  properly in the save function
+- Re-ordering of tags in tags column isn't implemented correctly
 
 ## License
 
@@ -382,11 +413,3 @@ Project Link:
 [nodejs-url]: https://nodejs.org/
 [mysql]: https://img.shields.io/badge/MySQL-00000F?style=for-the-badge&logo=mysql&logoColor=white
 [mysql-url]: https://nodejs.org/
-
-$$
-
-
-$$
-
-$$
-$$
