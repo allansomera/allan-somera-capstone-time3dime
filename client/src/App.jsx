@@ -28,12 +28,11 @@ const App = () => {
         theme="colored"
       />
       <Routes>
-        {/*
-         * <Route path="*" element={<Navigate to={`/user/${u_id}`} replace />} />
-         */}
-        <Route path="*" element={<Navigate to={`/startpage`} replace />} />
+        <Route
+          path="*"
+          element={<Navigate to={`/user/${u_id}/day/1`} replace />}
+        />
         <Route path="/user/*" element={<User />} />
-        <Route path="/startpage" element={<Startpage />} />
       </Routes>
     </>
   )
