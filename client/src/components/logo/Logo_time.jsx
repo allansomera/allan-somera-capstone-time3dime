@@ -48,6 +48,33 @@ const Logo_time = () => {
       opacity: 1,
       fill: "black",
     },
+    m_start: {
+      strokeDasharray: 100,
+      strokeDashoffset: 100,
+      fill: "transparent",
+      opacity: 0,
+      transition: {
+        duration: 2,
+        opacity: { duration: 0.5, ease: "easeInOut" },
+      },
+    },
+    m_finish: {
+      strokeDashoffset: 0,
+      transition: {
+        delay: 1,
+        duration: 1,
+        ease: "easeInOut",
+        fill: { delay: 2, duration: 2, ease: "easeInOut" },
+        opacity: { delay: 0.5, duration: 1.5, ease: "easeInOut" },
+        // fillOpacity: { duration: 2, ease: [1, 0, 0.8, 1] },
+      },
+      stroke: "black",
+      strokeLinecap: "round",
+      strokeLinejoin: "round",
+      strokeWidth: "2",
+      opacity: 1,
+      fill: "yellow",
+    },
   }
 
   return (
@@ -67,12 +94,9 @@ const Logo_time = () => {
           <motion.path
             variants={animateVariants}
             pathLength={100}
-            initial="start"
-            animate="end"
+            initial="m_start"
+            animate="m_finish"
             d="M132.733 72V0.575996H170.173L192.061 40.704L214.333 0.575996H250.237V72H223.261V27.456L198.205 72H184.285L159.325 27.456V72H132.733Z"
-            stroke="black"
-            strokeWidth="2"
-            fill="yellow"
           />
           <motion.path
             variants={animateVariants}
