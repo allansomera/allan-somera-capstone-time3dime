@@ -1,5 +1,5 @@
 import "./Logo_time.scss"
-import { useStae, useref, useEffect } from "react"
+import React, { useref, useEffect } from "react"
 
 import { motion } from "framer-motion"
 
@@ -20,8 +20,10 @@ const Logo_time = () => {
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
         >
-          <path d="M31.216 72V20.064H0.399994V0.575996H89.296V20.064H58.48V72H31.216Z" />
-          <path d="M123.526 0.575996V72H96.358V0.575996H123.526Z" />
+          {/*
+           * <path d="M31.216 72V20.064H0.399994V0.575996H89.296V20.064H58.48V72H31.216Z" />
+           * <path d="M123.526 0.575996V72H96.358V0.575996H123.526Z" />
+           */}
           <path
             d="M132.733 72V0.575996H170.173L192.061 40.704L214.333 0.575996H250.237V72H223.261V27.456L198.205 72H184.285L159.325 27.456V72H132.733Z"
             stroke="black"

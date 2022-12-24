@@ -12,6 +12,7 @@ import "react-toastify/dist/ReactToastify.css"
 import TimeblockContainer from "@/components/timeblock-container/TimeblockContainer"
 import Logo from "@/components/logo/Logo"
 import Logo_time from "@/components/logo/Logo_time"
+import Logo_block from "@/components/logo/Logo_block"
 import DateComp from "@/components/date-comp/DateComp"
 import DonutChart from "@/components/donut-chart/DonutChart"
 
@@ -237,6 +238,7 @@ const Homepage = () => {
            */}
           <Logo />
           <Logo_time />
+          <Logo_block />
           <div className="testcolumn">
             <div className="datepicker">
               <DateComp />
