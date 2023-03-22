@@ -11,7 +11,7 @@
     "migrate:rollback": "npx knex migrate:rollback",
     "seed": "npx knex seed:run",
     "setup": "concurrently \"npm run migrate\" \"npm run seed\"",
-    "backend": "npm run server"
+    "backend": "concurrently \"npm run setup\" \"npm run server\""
   },
   "keywords": [],
   "author": "",
