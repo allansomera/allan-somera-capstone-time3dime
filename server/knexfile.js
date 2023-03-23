@@ -5,7 +5,7 @@ require("dotenv").config()
 /**
  * @type { Object.<string, import("knex").Knex.Config> }
  */
-const { PORT, HOSTNAME, DB_LOCAL_DBNAME, DB_LOCAL_USER, DB_LOCAL_PASSWORD } =
+const { DB_PORT, HOSTNAME, DB_LOCAL_DBNAME, DB_LOCAL_USER, DB_LOCAL_PASSWORD } =
   process.env
 module.exports = {
   client: "mysql",
@@ -16,7 +16,7 @@ module.exports = {
     database: DB_LOCAL_DBNAME,
     user: DB_LOCAL_USER,
     password: DB_LOCAL_PASSWORD,
-    port: PORT
+    port: DB_PORT
     charset: "utf8",
   },
 }
