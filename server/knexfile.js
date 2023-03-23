@@ -1,5 +1,6 @@
 // Update with your config settings.
-const path = require("node:path")
+// const path = require("node:path")
+const path = require("path")
 require("dotenv").config()
 /**
  * @type { Object.<string, import("knex").Knex.Config> }
