@@ -16,7 +16,7 @@ module.exports = {
     database: DB_LOCAL_DBNAME,
     user: DB_LOCAL_USER,
     password: DB_LOCAL_PASSWORD,
-    port: DB_PORT
-    charset: "utf8",
+    port: DB_PORT,
+    // charset: "utf8",
   },
 }
