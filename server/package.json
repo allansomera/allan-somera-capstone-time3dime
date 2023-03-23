@@ -7,11 +7,12 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "concurrently \"npm run server\" \"cd ../client && npm start\"",
     "server": "nodemon server.js",
+    "dev_server": "node server.js",
     "migrate": "npx knex migrate:latest",
     "migrate:rollback": "npx knex migrate:rollback",
     "seed": "npx knex seed:run",
     "setup": "concurrently \"npm run migrate\" \"npm run seed\"",
-    "backend": "concurrently \"npm run setup\" \"npm run server\""
+    "backend": "concurrently \"npm run setup\" \"npm run dev_server\""
   },
   "keywords": [],
   "author": "",
