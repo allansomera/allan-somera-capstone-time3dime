@@ -17,8 +17,8 @@ server.use("/users", usersRoutes)
 const tagsRoutes = require("./routes/tagsRouter")
 server.use("/tags", tagsRoutes)
 
-const PORT = process.env.PORT || 5500
-
-server.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT} `)
-})
+// const PORT = process.env.PORT || 5500
+//
+// server.listen(PORT, () => {
+//   console.log(`Server is running on http://localhost:${PORT} `)
+// })

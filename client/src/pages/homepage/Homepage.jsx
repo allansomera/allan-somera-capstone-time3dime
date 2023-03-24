@@ -37,8 +37,8 @@ const getColor = (type) => {
   return tagColors[type]
 }
 
-const URL = "http://localhost:8080"
-// const URL = "https://time3dime-be.onrender.com"
+// const URL = "http://localhost:8080"
+const URL = "https://time3dime-be.onrender.com"
 // const u_id = "2922c286-16cd-4d43-ab98-c79f698aeab0"
 
 const getObject = (timeblocks, dest) => {
