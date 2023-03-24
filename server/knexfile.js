@@ -17,6 +17,7 @@ module.exports = {
     user: DB_LOCAL_USER,
     password: DB_LOCAL_PASSWORD,
     port: DB_PORT,
+    ssl: true,
     // charset: "utf8",
   },
 }
